@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+.header {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  background: black;
+  width: 100%;
+  height: 6rem;
+  align-items: center;
+}
+
+/* Center part - Name */
+.name-container {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  height: 6rem;
+  width: 100%;
+
+  .name-text {
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Permanent Marker', cursive;
+  }
+}
+
+/* Left part - Social networks */
+.sn-container {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+  height: 100%;
+
+  .linkedin-logo-container,
+  .github-logo-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1.5rem;
+  }
+
+  .linkedin-logo,
+  .github-logo {
+    width: 2.5rem;
+  }
+
+  .linkedin-text,
+  .github-text {
+    position: absolute;
+    color: white;
+    font-size: 1rem;
+    font-family: 'Rubik', sans-serif;
+    opacity: 0;
+    top: 1rem;
+  }
+
+  .linkedin-logo-container:hover .linkedin-text,
+  .github-logo-container:hover .github-text {
+    opacity: 1;
+    top: 1.75rem;
+  }
+}
+
+/* Right part - Navigation */
+.menu-container {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  right: 0;
+  width: 25%;
+  height: 100%;
+
+  .menu {
+    position: relative;
+    display: inline-block;
+
+    .menu-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background-color: #444;
+      color: white;
+      font-size: 1rem;
+      font-family: 'Rubik', sans-serif;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #555;
+      }
+    }
+
+    .menu-list {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #222;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      border-radius: 0.5rem;
+      min-width: fit-content;
+      overflow: hidden;
+
+      li {
+        display: block;
+        padding: 1rem;
+        border-bottom: 0.1rem solid #555;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: #555;
+        }
+
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          color: white;
+          font-size: 1rem;
+          font-family: 'Rubik', sans-serif;
+          padding: 0.5rem;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    &:hover .menu-list {
+      display: block;
+    }
+  }
+}
