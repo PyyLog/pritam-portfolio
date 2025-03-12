@@ -86,10 +86,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1rem;
       background-color: #444;
       color: white;
-      font-size: 1rem;
+      font-size: 0.85rem;
       font-family: 'Rubik', sans-serif;
       cursor: pointer;
       border-radius: 0.5rem;
@@ -115,7 +115,7 @@
 
       li {
         display: block;
-        padding: 1rem;
+        padding: 0.5rem;
         border-bottom: 0.1rem solid #555;
 
         &:last-child {
@@ -132,7 +132,7 @@
           justify-content: center;
           text-decoration: none;
           color: white;
-          font-size: 1rem;
+          font-size: 0.85rem;
           font-family: 'Rubik', sans-serif;
           padding: 0.5rem;
           white-space: nowrap;
