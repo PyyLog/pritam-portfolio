@@ -5,10 +5,11 @@
   position: absolute;
   justify-content: center;
   align-items: center;
-  height: 2rem;
+  height: 4vh;
   width: 100%;
   background: black;
   bottom: 0;
+  z-index: 2;
 
   .copyright-text {
     color: white;
