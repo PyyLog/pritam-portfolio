@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LINKS } from '../../links/links';
+import { LINKS } from '../../data/links';
 
 @Component({
   selector: 'app-header',
