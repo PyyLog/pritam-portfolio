@@ -247,6 +247,7 @@
 
   &::-webkit-scrollbar {
     width: 0.5rem;
+    display: block;
   }
 
   &::-webkit-scrollbar-thumb {
