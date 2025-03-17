@@ -1,13 +1,13 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 
 @Component({
-  selector: 'app-main-content-background',
+  selector: 'app-pages-background',
   standalone: true,
   imports: [],
-  templateUrl: './main-content-background.component.html',
-  styleUrl: './main-content-background.component.scss',
+  templateUrl: './pages-background.component.html',
+  styleUrl: './pages-background.component.scss',
 })
-export class MainContentBackgroundComponent implements OnInit {
+export class PagesBackgroundComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
     private el: ElementRef

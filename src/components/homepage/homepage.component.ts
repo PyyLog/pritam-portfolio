@@ -21,13 +21,13 @@ interface Project {
 }
 
 @Component({
-  selector: 'app-homepage-content',
+  selector: 'app-homepage',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './homepage-content.component.html',
-  styleUrl: './homepage-content.component.scss',
+  templateUrl: './homepage.component.html',
+  styleUrl: './homepage.component.scss',
 })
-export class HomepageContentComponent {
+export class HomepageComponent {
   illustrationPicture = 'pictures/landscape-at-twilight-van-gogh.png';
   activeTab: 'projects' | 'idle' = 'projects';
   selectedProject: Project | null = null;
