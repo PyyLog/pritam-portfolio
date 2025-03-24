@@ -1,0 +1,76 @@
+.chronology-page {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 86vh;
+  z-index: 2;
+
+  .chronology-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: darkblue;
+  }
+
+  .circle {
+    width: 170%;
+    height: 150%;
+    border-radius: 50%;
+    background: linear-gradient(-90deg, rgba(70, 130, 180, 0.5), transparent);
+    position: absolute;
+    top: -25%;
+    left: 0;
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+
+  .chronology-text {
+    color: white;
+    font-family: Garamond, serif;
+    font-size: 3.75rem;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .chronology-container {
+    position: relative;
+    overflow-x: auto;
+    width: 70%;
+    height: 100%;
+    background: darkgreen;
+  }
+
+  .chronology {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: fit-content;
+    height: 95%;
+    margin: 1rem;
+    border: 0.1rem solid white;
+  }
+
+  .chronology-segment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .chronology-line {
+    height: 0.2rem;
+    background: white;
+  }
+
+  .chronology-circle {
+    border-radius: 50%;
+    border: 0.2rem white solid;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+}
