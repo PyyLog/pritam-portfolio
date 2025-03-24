@@ -1,7 +1,7 @@
 export const EVENTS = [
   {
     id: 1,
-    date: new Date(2001, 5, 8),
+    date: new Date(2001, 5, 1),
     title: 'Birth YAAY !',
     type: 'base',
     description: 'Beginning of Life',
