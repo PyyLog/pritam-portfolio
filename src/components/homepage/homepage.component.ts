@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PROJECTS_DESCRIPTION } from '../../data/projects';
+import { LINKS } from '../../data/links';
 
 interface taskDetails {
   title: string;
@@ -41,6 +42,8 @@ export class HomepageComponent {
     this.projectsDescription[4],
     this.projectsDescription[5],
   ];
+  links = LINKS;
+  constructor(private renderer: Renderer2) {}
 
   switchTab(tab: 'idle' | 'projects') {
     this.activeTab = tab;
@@ -53,5 +56,16 @@ export class HomepageComponent {
 
   closeProjectDetails(): void {
     this.selectedProject = null;
+  }
+
+  toggleContactText(event: Event): void {
+    const contactTextContainer = (event.target as HTMLElement).nextElementSibling;
+    if (contactTextContainer) {
+      if (contactTextContainer.classList.contains('active')) {
+        this.renderer.removeClass(contactTextContainer, 'active');
+      } else {
+        this.renderer.addClass(contactTextContainer, 'active');
+      }
+    }
   }
 }

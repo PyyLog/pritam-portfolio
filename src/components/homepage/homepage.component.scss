@@ -363,6 +363,7 @@
   }
 
   .navigation li {
+    position: relative;
     width: 100%;
     list-style-type: none;
     border-bottom: 0.1rem solid white;
@@ -370,21 +371,66 @@
     text-align: center;
   }
 
-  .navigation a {
+  .about-me-btn,
+  .chronology-btn,
+  .contact-btn {
+    display: block;
     color: white;
     text-decoration: none;
     font-size: 1.75rem;
     font-family: 'Garamond', serif;
     text-transform: uppercase;
-    display: block;
     width: 100%;
     text-align: center;
+    background: none;
+    border: none;
     padding: 1rem 0;
+    cursor: pointer;
     transition: transform 0.25s ease-in-out;
   }
 
-  .navigation a:hover {
+  .about-me-btn:hover,
+  .chronology-btn:hover,
+  .contact-btn:hover {
     transform: scale(1.05);
     box-shadow: white 0 0 0.5rem;
+  }
+
+  .contact-text-container {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    border: 0.1rem solid white;
+    border-radius: 1rem;
+    left: 0;
+    transform: translateY(25%);
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity 0.25s ease-in-out,
+      visibility 0.25s ease-in-out;
+  }
+
+  .contact-text {
+    text-align: center;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1rem;
+    padding: 0 2rem;
+  }
+
+  .contact-text-container.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .implicit-indicator {
+    font-style: italic;
+  }
+
+  .linkedin-contact-text {
+    color: white;
   }
 }

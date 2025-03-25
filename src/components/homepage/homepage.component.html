@@ -80,9 +80,19 @@
     <div class="navigation-container">
       <div class="navigation">
         <ul>
-          <li><a routerLink="/about-me">About Me</a></li>
-          <li><a routerLink="/chronology">Chronology</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a class="about-me-btn" routerLink="/about-me">About Me</a></li>
+          <li><a class="chronology-btn" routerLink="/chronology">Chronology</a></li>
+          <li>
+            <button class="contact-btn" (click)="toggleContactText($event)">Contact</button>
+            <div class="contact-text-container">
+              <p class="contact-text">
+                No form here 😎, just a magic link to my
+                <a class="linkedin-contact-text" [href]="links.linkedin">LinkedIn</a>. When sending a DM, add the following sentence:
+                <span class="implicit-indicator">"That shooting star was too fast !"</span>
+                so that I know you came from here.🙂
+              </p>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
