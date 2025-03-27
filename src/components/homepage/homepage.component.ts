@@ -1,6 +1,7 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, AfterViewInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import gsap from 'gsap';
 import { PROJECTS_DESCRIPTION } from '../../data/projects';
 import { LINKS } from '../../data/links';
 
@@ -29,7 +30,7 @@ interface Project {
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss',
 })
-export class HomepageComponent {
+export class HomepageComponent implements AfterViewInit {
   illustrationPicture = 'pictures/landscape-at-twilight-van-gogh.png';
   activeTab: 'projects' | 'idle' = 'projects';
   selectedProject: Project | null = null;
@@ -44,6 +45,24 @@ export class HomepageComponent {
   ];
   links = LINKS;
   constructor(private renderer: Renderer2) {}
+  @ViewChild('homepageContentContainer', { static: true }) homepageContentContainer!: ElementRef;
+  @ViewChild('navigation', { static: true }) navigation!: ElementRef;
+
+  ngAfterViewInit() {
+    gsap.from(this.homepageContentContainer.nativeElement, {
+      opacity: 0,
+      x: -50,
+      duration: 0.75,
+      ease: 'power2.inOut.out',
+    });
+    gsap.from(this.navigation.nativeElement.children, {
+      opacity: 0,
+      x: 50,
+      stagger: 0.15,
+      delay: 0.25,
+      ease: 'power2.inOut.out',
+    });
+  }
 
   switchTab(tab: 'idle' | 'projects') {
     this.activeTab = tab;
