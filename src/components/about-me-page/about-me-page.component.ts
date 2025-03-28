@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { SKILLS } from '../../data/skills';
+import gsap from 'gsap';
 
 interface Skills {
   name: string;
@@ -15,7 +16,7 @@ interface Skills {
   templateUrl: './about-me-page.component.html',
   styleUrls: ['./about-me-page.component.scss'],
 })
-export class AboutMePageComponent {
+export class AboutMePageComponent implements AfterViewInit {
   pritamPicture = 'pictures/pritam-picture.png';
   skillsDetails = SKILLS;
   skills: Skills[] = [
@@ -38,4 +39,38 @@ export class AboutMePageComponent {
     this.skillsDetails[16],
     this.skillsDetails[17],
   ];
+  @ViewChild('titleCircle') titleCircle!: ElementRef;
+  @ViewChild('titleText') titleText!: ElementRef;
+  @ViewChild('pictureContainer') pictureContainer!: ElementRef;
+  @ViewChild('introducingTextContainer') introducingTextContainer!: ElementRef;
+
+  ngAfterViewInit() {
+    gsap.from(this.titleCircle.nativeElement, {
+      opacity: 0,
+      x: -50,
+      duration: 0.75,
+      ease: 'power2.inOut.out',
+    });
+    gsap.from(this.titleText.nativeElement, {
+      opacity: 0,
+      x: -65,
+      duration: 0.75,
+      delay: 0.5,
+      ease: 'power2.inOut.out',
+    });
+    gsap.from(this.pictureContainer.nativeElement, {
+      opacity: 0,
+      x: 35,
+      duration: 0.75,
+      delay: 1.25,
+      ease: 'power2.inOut.out',
+    });
+    gsap.from(this.introducingTextContainer.nativeElement, {
+      opacity: 0,
+      x: 35,
+      duration: 0.75,
+      delay: 1.25,
+      ease: 'power2.inOut.out',
+    });
+  }
 }
