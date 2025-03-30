@@ -79,11 +79,28 @@ export class HomepageComponent implements AfterViewInit {
 
   toggleContactText(event: Event): void {
     const contactTextContainer = (event.target as HTMLElement).nextElementSibling;
+
     if (contactTextContainer) {
       if (contactTextContainer.classList.contains('active')) {
-        this.renderer.removeClass(contactTextContainer, 'active');
+        gsap.to(contactTextContainer, {
+          opacity: 0,
+          visibility: 'hidden',
+          duration: 0.1,
+          ease: 'power2.inOut.out',
+          onComplete: () => {
+            this.renderer.removeClass(contactTextContainer, 'active');
+          },
+        });
       } else {
-        this.renderer.addClass(contactTextContainer, 'active');
+        gsap.to(contactTextContainer, {
+          opacity: 1,
+          visibility: 'visible',
+          duration: 0.1,
+          ease: 'power2.inOut.out',
+          onComplete: () => {
+            this.renderer.addClass(contactTextContainer, 'active');
+          },
+        });
       }
     }
   }

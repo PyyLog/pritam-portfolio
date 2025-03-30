@@ -62,14 +62,14 @@ export class AboutMePageComponent implements AfterViewInit {
       opacity: 0,
       x: 35,
       duration: 0.75,
-      delay: 1,
+      delay: 0.65,
       ease: 'power2.inOut.out',
     });
     gsap.from(this.introducingTextContainer.nativeElement, {
       opacity: 0,
       x: 35,
       duration: 0.75,
-      delay: 1,
+      delay: 0.65,
       ease: 'power2.inOut.out',
     });
   }

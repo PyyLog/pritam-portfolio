@@ -66,7 +66,7 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit {
       opacity: 0,
       x: 35,
       duration: 0.75,
-      delay: 1,
+      delay: 0.65,
       ease: 'power2.inOut.out',
     });
 
