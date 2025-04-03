@@ -1,100 +1,108 @@
-<div>
-  <div class="content-container">
-    <div #homepageContentContainer class="homepage-content-container">
-      <div class="quick-tabs-container">
-        <ul>
-          <li>
-            <a
-              [class.active]="activeTab === 'idle'"
-              (click)="switchTab('idle'); $event.preventDefault()"
-              (keydown.enter)="switchTab('idle'); $event.preventDefault()"
-              tabindex="0"
-              >Idle</a
-            >
-          </li>
-          <li>
-            <a
-              [class.active]="activeTab === 'projects'"
-              (click)="switchTab('projects'); $event.preventDefault()"
-              (keydown.enter)="switchTab('projects'); $event.preventDefault()"
-              tabindex="0"
-              >Projects</a
-            >
-          </li>
-        </ul>
-      </div>
+<div class="content-container">
+  <div #homepageContentContainer class="homepage-content-container">
+    <!-- Tab Navigation -->
+    <nav class="quick-tabs-container">
+      <ul>
+        <li>
+          <a
+            [class.active]="activeTab === 'idle'"
+            (click)="switchTab('idle'); $event.preventDefault()"
+            (keydown.enter)="switchTab('idle'); $event.preventDefault()"
+            tabindex="0"
+            >Idle</a
+          >
+        </li>
+        <li>
+          <a
+            [class.active]="activeTab === 'projects'"
+            (click)="switchTab('projects'); $event.preventDefault()"
+            (keydown.enter)="switchTab('projects'); $event.preventDefault()"
+            tabindex="0"
+            >Projects</a
+          >
+        </li>
+      </ul>
+    </nav>
 
-      <div class="illustration-container" *ngIf="activeTab === 'idle'">
-        <img class="illustration" [src]="illustrationPicture" alt="Landscape At Twilight Van-Gogh-Painting" />
-        <p class="illustration-credits">Landscape at Twilight (1890) - Vincent Van Gogh</p>
-      </div>
+    <!-- Idle Tab -->
+    <section class="illustration-container" *ngIf="activeTab === 'idle'">
+      <img class="illustration" [src]="illustrationPicture" alt="Landscape At Twilight Van-Gogh-Painting" />
+      <p class="illustration-credits">Landscape at Twilight (1890) - Vincent Van Gogh</p>
+    </section>
 
-      <div class="projects-container" *ngIf="activeTab === 'projects'">
-        <div class="projects-carousel" *ngIf="!selectedProject">
-          <div class="project-item" *ngFor="let project of projects">
-            <img [src]="project.thumbnail" alt="{{ project.title }}" />
-            <div class="project-overlay">
-              <h3>{{ project.title }}</h3>
-              <p>{{ project.shortDescription }}</p>
-              <div class="technologies">
-                <span *ngFor="let tech of project.technologies">{{ tech }}</span>
-              </div>
-              <button class="read-more" (click)="showProjectDetails(project)">Read More</button>
+    <!-- Projects Tab -->
+    <section class="projects-container" *ngIf="activeTab === 'projects'">
+      <!-- Project Carousel -->
+      <div class="projects-carousel" *ngIf="!selectedProject">
+        <div class="project-item" *ngFor="let project of projects">
+          <img [src]="project.thumbnail" alt="{{ project.title }}" />
+          <div class="project-overlay">
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.shortDescription }}</p>
+            <div class="technologies">
+              <span *ngFor="let tech of project.technologies">{{ tech }}</span>
             </div>
-          </div>
-        </div>
-
-        <div class="project-details" *ngIf="selectedProject">
-          <button class="close-btn" (click)="closeProjectDetails()">×</button>
-          <h2>{{ selectedProject.title }}</h2>
-          <img [src]="selectedProject.illustration" alt="{{ selectedProject.title }}" />
-          <div class="tech-stack">
-            <span *ngFor="let tech of selectedProject.technologies">{{ tech }}</span>
-          </div>
-          <div class="project-context">
-            <h3 class="context-title-text">Context:</h3>
-            <p>{{ selectedProject.context }}</p>
-          </div>
-          <div class="project-tasks-details">
-            <h3 class="tasks-details-title-text">Work that have been carried:</h3>
-            <div>
-              <ul>
-                <li *ngFor="let task of selectedProject.tasksDetails; let i = index">
-                  <p>{{ task.title }}</p>
-                  <ul>
-                    <li *ngFor="let point of task.points">{{ point }}</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="path-to-code">
-            <a *ngFor="let path of selectedProject.pathToCodes; let i = index" href="{{ path }}">
-              <span>{{ selectedProject.spanNames[i] }}</span>
-            </a>
+            <button class="read-more" (click)="showProjectDetails(project)">Read More</button>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="navigation-container">
-      <div class="navigation">
-        <ul #navigation>
-          <li><a class="about-me-btn" routerLink="/about-me">About Me</a></li>
-          <li><a class="chronology-btn" routerLink="/chronology">Chronology</a></li>
-          <li>
-            <button class="contact-btn" (click)="toggleContactText($event)">Contact</button>
-            <div class="contact-text-container">
-              <p class="contact-text">
-                No form here 😎, just a magic link to my
-                <a class="linkedin-contact-text" [href]="links.linkedin">LinkedIn</a>. When sending a DM, add the following sentence:
-                <span class="implicit-indicator">"That shooting star was too fast !"</span>
-                so that I know you came from here.🙂
-              </p>
-            </div>
-          </li>
-        </ul>
+      <!-- Project Details -->
+      <div class="project-details" *ngIf="selectedProject">
+        <button class="close-btn" (click)="closeProjectDetails()">×</button>
+        <h2>{{ selectedProject.title }}</h2>
+        <img [src]="selectedProject.illustration" alt="{{ selectedProject.title }}" />
+
+        <div class="tech-stack">
+          <span *ngFor="let tech of selectedProject.technologies">{{ tech }}</span>
+        </div>
+
+        <div class="project-context">
+          <h3 class="context-title-text">Context:</h3>
+          <p>{{ selectedProject.context }}</p>
+        </div>
+
+        <div class="project-tasks-details">
+          <h3 class="tasks-details-title-text">Work that have been carried:</h3>
+          <div>
+            <ul>
+              <li *ngFor="let task of selectedProject.tasksDetails; let i = index">
+                <p>{{ task.title }}</p>
+                <ul>
+                  <li *ngFor="let point of task.points">{{ point }}</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="path-to-code">
+          <a *ngFor="let path of selectedProject.pathToCodes; let i = index" href="{{ path }}">
+            <span>{{ selectedProject.spanNames[i] }}</span>
+          </a>
+        </div>
       </div>
+    </section>
+  </div>
+
+  <!-- Side Navigation -->
+  <div class="navigation-container">
+    <div class="navigation">
+      <ul #navigation>
+        <li><a class="about-me-btn" routerLink="/about-me">About Me</a></li>
+        <li><a class="chronology-btn" routerLink="/chronology">Chronology</a></li>
+        <li>
+          <button class="contact-btn" (click)="toggleContactText($event)">Contact</button>
+          <div class="contact-text-container">
+            <p class="contact-text">
+              No form here 😎, just a magic link to my
+              <a class="linkedin-contact-text" [href]="links.linkedin">LinkedIn</a>. When sending a DM, add the following sentence:
+              <span class="implicit-indicator">"That shooting star was too fast !"</span>
+              so that I know you came from here.🙂
+            </p>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

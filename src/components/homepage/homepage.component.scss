@@ -9,7 +9,7 @@
   z-index: 2;
 }
 
-/* Left part: state and illustration */
+/* Left part: projects and illustration */
 .homepage-content-container {
   display: flex;
   width: 60%;
@@ -31,10 +31,10 @@
     list-style-type: none;
     text-align: center;
     cursor: pointer;
-  }
 
-  .quick-tabs-container li:not(:first-child) {
-    margin-left: 2rem;
+    &:not(:first-child) {
+      margin-left: 2rem;
+    }
   }
 
   .quick-tabs-container a {
@@ -48,29 +48,30 @@
     width: 100%;
     text-align: center;
     padding: 1rem 0;
-  }
 
-  .quick-tabs-container a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 0.01rem;
-    background-color: white;
-    transition:
-      width 0.3s ease,
-      left 0.3s ease;
-  }
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0.01rem;
+      background-color: white;
+      transition:
+        width 0.3s ease,
+        left 0.3s ease;
+    }
 
-  .quick-tabs-container a:hover::after {
-    width: 100%;
-    left: 0;
-  }
+    &:hover::after,
+    &.active::after {
+      width: 100%;
+      left: 0;
+    }
 
-  .quick-tabs-container a.active::after {
-    width: 100%;
-    left: 0;
+    &.active::after {
+      width: 100%;
+      left: 0;
+    }
   }
 
   .illustration-container {
@@ -88,10 +89,14 @@
     margin-left: 2rem;
     border: 1rem solid white;
     transition: filter 0.15s ease-in-out;
-  }
 
-  .illustration:hover {
-    filter: brightness(50%);
+    &:hover {
+      filter: brightness(50%);
+
+      & + .illustration-credits {
+        opacity: 1;
+      }
+    }
   }
 
   .illustration-credits {
@@ -103,10 +108,6 @@
     margin-left: 2rem;
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
-  }
-
-  .illustration:hover + .illustration-credits {
-    opacity: 1;
   }
 }
 
@@ -335,12 +336,6 @@
       background-color: rgba(255, 255, 255, 0.5);
     }
   }
-}
-
-/* Active tab indicator */
-.quick-tabs-container a.active::after {
-  width: 100%;
-  left: 0;
 }
 
 /* Right part: Navigation */
