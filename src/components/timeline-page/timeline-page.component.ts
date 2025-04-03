@@ -1,25 +1,16 @@
 import { Component, ElementRef, Renderer2, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { EVENTS } from '../../data/chronology';
+import { TimelineEvent, colorTemplateByType } from '../../models/timeline.model';
 import gsap from 'gsap';
 
-interface ChronologyEvent {
-  id: number;
-  date: Date;
-  title: string;
-  type: string;
-  description: string;
-}
-
-type colorTemplateByType = Record<string, string>;
-
 @Component({
-  selector: 'app-chronology-page',
+  selector: 'app-timeline-page',
   standalone: true,
   imports: [],
-  templateUrl: './chronology-page.component.html',
-  styleUrl: './chronology-page.component.scss',
+  templateUrl: './timeline-page.component.html',
+  styleUrl: './timeline-page.component.scss',
 })
-export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TimelinePageComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly minLineWidth: number = 15;
   private readonly maxLineWidth: number = 50;
   private readonly circleSize: number = 3.5;
@@ -29,11 +20,12 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy
     internship: 'gold',
     exchange: 'blue',
   };
-  events: ChronologyEvent[] = EVENTS;
+  events: TimelineEvent[] = EVENTS;
   private observers: IntersectionObserver[] = [];
+
   @ViewChild('titleCircle') titleCircle!: ElementRef;
   @ViewChild('titleText') titleText!: ElementRef;
-  @ViewChild('chronologyContainer') chronologyContainer!: ElementRef;
+  @ViewChild('timelineContainer') timelineContainer!: ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -41,7 +33,7 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy
   ) {}
 
   ngOnInit() {
-    this.generateChronology();
+    this.generateTimeline();
   }
 
   ngOnDestroy() {
@@ -55,6 +47,7 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy
       duration: 0.75,
       ease: 'power2.inOut.out',
     });
+
     gsap.from(this.titleText.nativeElement, {
       opacity: 0,
       x: -65,
@@ -62,7 +55,8 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy
       delay: 0.5,
       ease: 'power2.inOut.out',
     });
-    gsap.from(this.chronologyContainer.nativeElement, {
+
+    gsap.from(this.timelineContainer.nativeElement, {
       opacity: 0,
       x: 35,
       duration: 0.75,
@@ -122,38 +116,44 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
-  generateChronology() {
-    const chronologyContainer: HTMLElement = this.el.nativeElement.querySelector('.chronology');
-    if (!chronologyContainer) {
-      console.error('Chronology container not found');
-      return;
-    }
+  generateTimeline() {
+    const timelineContainer: HTMLElement = this.el.nativeElement.querySelector('.timeline');
     this.events.sort((a, b) => a.date.getTime() - b.date.getTime());
     const firstEventDate = this.events[0].date.getTime();
     const lastEventDate = this.events[this.events.length - 1].date.getTime();
     const totalTimeSpan = lastEventDate - firstEventDate;
 
+    if (!timelineContainer) {
+      console.error('Timeline container not found');
+      return;
+    }
+
     for (let i = 0; i < this.events.length; i++) {
-      const chronologySegment: HTMLElement = this.renderer.createElement('div');
-      this.renderer.addClass(chronologySegment, 'chronology-segment');
-      this.renderer.setStyle(chronologySegment, 'flex-direction', 'row');
-      this.renderer.setStyle(chronologySegment, 'align-items', 'center');
+      const timelineSegment: HTMLElement = this.renderer.createElement('div');
+      this.renderer.addClass(timelineSegment, 'timeline-segment');
+      this.renderer.setStyle(timelineSegment, 'flex-direction', 'row');
+      this.renderer.setStyle(timelineSegment, 'align-items', 'center');
 
       const eventPointContainer: HTMLElement = this.renderer.createElement('div');
       this.renderer.addClass(eventPointContainer, 'event-point-container');
+
       const eventDateText: HTMLElement = this.renderer.createElement('div');
       this.renderer.addClass(eventDateText, 'event-date-text');
+
       const eventDate: HTMLElement = this.renderer.createText(this.formatDate(this.events[i].date));
       this.renderer.appendChild(eventDateText, eventDate);
       this.renderer.appendChild(eventPointContainer, eventDateText);
-      const chronologyCircle: HTMLElement = this.renderer.createElement('div');
-      this.renderer.addClass(chronologyCircle, 'chronology-circle');
-      this.renderer.setStyle(chronologyCircle, 'width', `${this.circleSize}rem`);
-      this.renderer.setStyle(chronologyCircle, 'height', `${this.circleSize}rem`);
-      this.renderer.setStyle(chronologyCircle, 'border', `${this.borderRadiusCircle}rem solid ${this.colorTemplateByType[this.events[i].type]}`);
-      this.renderer.appendChild(eventPointContainer, chronologyCircle);
+
+      const timelineCircle: HTMLElement = this.renderer.createElement('div');
+      this.renderer.addClass(timelineCircle, 'timeline-circle');
+      this.renderer.setStyle(timelineCircle, 'width', `${this.circleSize}rem`);
+      this.renderer.setStyle(timelineCircle, 'height', `${this.circleSize}rem`);
+      this.renderer.setStyle(timelineCircle, 'border', `${this.borderRadiusCircle}rem solid ${this.colorTemplateByType[this.events[i].type]}`);
+      this.renderer.appendChild(eventPointContainer, timelineCircle);
+
       const eventInfo: HTMLElement = this.renderer.createElement('div');
       this.renderer.addClass(eventInfo, 'event-info-text');
+
       const eventTitle: HTMLElement = this.renderer.createElement('h3');
       const eventDetails: HTMLElement = this.renderer.createElement('p');
       this.renderer.appendChild(eventTitle, this.renderer.createText(this.events[i].title));
@@ -161,7 +161,7 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy
       this.renderer.appendChild(eventInfo, eventTitle);
       this.renderer.appendChild(eventInfo, eventDetails);
       this.renderer.appendChild(eventPointContainer, eventInfo);
-      this.renderer.appendChild(chronologySegment, eventPointContainer);
+      this.renderer.appendChild(timelineSegment, eventPointContainer);
 
       if (i < this.events.length - 1) {
         const currentEventDate = this.events[i].date.getTime();
@@ -169,12 +169,13 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy
         const timeDifference = nextEventDate - currentEventDate;
         const widthRatio = timeDifference / totalTimeSpan;
         const lineWidth = this.minLineWidth + widthRatio * (this.maxLineWidth - this.minLineWidth);
-        const chronologyLine: HTMLElement = this.renderer.createElement('div');
-        this.renderer.addClass(chronologyLine, 'chronology-line');
-        this.renderer.setStyle(chronologyLine, 'width', `${lineWidth}rem`);
-        this.renderer.appendChild(chronologySegment, chronologyLine);
+
+        const timelineLine: HTMLElement = this.renderer.createElement('div');
+        this.renderer.addClass(timelineLine, 'timeline-line');
+        this.renderer.setStyle(timelineLine, 'width', `${lineWidth}rem`);
+        this.renderer.appendChild(timelineSegment, timelineLine);
       }
-      this.renderer.appendChild(chronologyContainer, chronologySegment);
+      this.renderer.appendChild(timelineContainer, timelineSegment);
     }
   }
 

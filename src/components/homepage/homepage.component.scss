@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
-.content-container {
+.homepage {
   display: flex;
   position: relative;
   flex-direction: row;
@@ -367,7 +367,7 @@
   }
 
   .about-me-btn,
-  .chronology-btn,
+  .timeline-btn,
   .contact-btn {
     display: block;
     color: white;
@@ -385,7 +385,7 @@
   }
 
   .about-me-btn:hover,
-  .chronology-btn:hover,
+  .timeline-btn:hover,
   .contact-btn:hover {
     transform: scale(1.05);
     box-shadow: white 0 0 0.5rem;

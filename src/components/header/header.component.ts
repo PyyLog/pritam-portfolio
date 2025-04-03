@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.routerSubscription = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      this.showMenu = event.url === '/about-me' || event.url === '/chronology';
+      this.showMenu = event.url === '/about-me' || event.url === '/timeline';
     });
   }
 
