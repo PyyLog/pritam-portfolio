@@ -1,15 +1,18 @@
-<div class="about-me-page">
+<section class="about-me-page">
   <div class="about-me-title-container">
     <div #titleCircle class="circle"></div>
     <p #titleText class="about-me-text">About Me</p>
   </div>
+
   <div #pictureContainer class="pritam-picture-container">
     <img class="pritam-picture" [src]="pritamPicture" alt="Pritam Picture" />
   </div>
+
   <div #introducingTextContainer class="introducing-text-container">
     <div class="introducing-text-title">
       <p>Pritam <span>(PyyLog)</span></p>
     </div>
+
     <div class="introducing-text">
       <p>
         I've been fascinated by transport ever since I was a child. My curiosity first led me to automobiles, then to airplanes. It was then that I
@@ -27,10 +30,12 @@
         development engineer.<br /><br />
       </p>
     </div>
+
     <div class="skills-carousel-container">
       <div class="skills-carousel-title">
         <p>Skills</p>
       </div>
+
       <div class="skills-carousel">
         <div class="skill-item" *ngFor="let skill of skills">
           <img [src]="skill.thumbnail" alt="{{ skill.name }} Logo" />
@@ -42,4 +47,4 @@
       </div>
     </div>
   </div>
-</div>
+</section>
