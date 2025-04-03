@@ -10,7 +10,7 @@ import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 export class PagesBackgroundComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
-    private el: ElementRef
+    private el: ElementRef,
   ) {}
 
   ngOnInit() {

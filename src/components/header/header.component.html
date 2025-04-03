@@ -1,22 +1,28 @@
 <div class="header">
+  <!--Name container -->
   <div class="name-container">
     <a class="name-text" routerLink="">Pritam Kantane</a>
   </div>
+
+  <!--Social networks container -->
   <div class="sn-container">
-    <div class="linkedin-logo-container">
-      <a [href]="links.linkedin">
-        <img class="linkedin-logo" [src]="linkedinLogo" alt="Linkedin Logo" />
+    <div class="social-icon-container linkedin-logo-container">
+      <a [href]="links.linkedin" target="_blank">
+        <img class="social-icon linkedin-logo" [src]="linkedinLogo" alt="LinkedIn Logo" />
       </a>
-      <p class="linkedin-text">Linkedin</p>
+      <p class="social-label linkedin-text">LinkedIn</p>
     </div>
-    <div class="github-logo-container">
-      <a [href]="links.github">
-        <img class="github-logo" [src]="githubLogo" alt="Github Logo" />
+
+    <div class="social-icon-container github-logo-container">
+      <a [href]="links.github" target="_blank">
+        <img class="social-icon github-logo" [src]="githubLogo" alt="GitHub Logo" />
       </a>
-      <p class="github-text">GitHub</p>
+      <p class="social-label github-text">GitHub</p>
     </div>
   </div>
-  <div class="menu-container">
+
+  <!--Menu burger -->
+  <div class="menu-container" [ngClass]="{ 'menu-visible': showMenu }">
     <div class="menu">
       <a class="menu-button" routerLink="">Homepage</a>
       <ul class="menu-list">

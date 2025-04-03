@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { EVENTS } from '../../data/chronology';
 import gsap from 'gsap';
 
@@ -19,7 +19,7 @@ type colorTemplateByType = Record<string, string>;
   templateUrl: './chronology-page.component.html',
   styleUrl: './chronology-page.component.scss',
 })
-export class ChronologyPageComponent implements OnInit, AfterViewInit {
+export class ChronologyPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly minLineWidth: number = 15;
   private readonly maxLineWidth: number = 50;
   private readonly circleSize: number = 3.5;
@@ -37,7 +37,7 @@ export class ChronologyPageComponent implements OnInit, AfterViewInit {
 
   constructor(
     private renderer: Renderer2,
-    private el: ElementRef
+    private el: ElementRef,
   ) {}
 
   ngOnInit() {

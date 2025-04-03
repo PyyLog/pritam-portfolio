@@ -1,36 +1,34 @@
-import { Component, Renderer2, OnInit } from '@angular/core';
-import { RouterLink, Router, NavigationEnd, Event } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { RouterLink, Router, NavigationEnd } from '@angular/router';
 import { LINKS } from '../../data/links';
+import { filter, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
-  linkedinLogo = 'icons/linkedin-logo.png';
-  githubLogo = 'icons/github-logo.png';
-  links = LINKS;
+export class HeaderComponent implements OnInit, OnDestroy {
+  readonly linkedinLogo = 'icons/linkedin-logo.png';
+  readonly githubLogo = 'icons/github-logo.png';
+  readonly links = LINKS;
+  showMenu = false;
+  private routerSubscription: Subscription | undefined;
 
-  constructor(
-    private router: Router,
-    private renderer: Renderer2
-  ) {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        const menuContainer = document.querySelector('.menu-container');
-        if (event.url === '/about-me' || event.url === '/chronology') {
-          this.renderer.setStyle(menuContainer, 'visibility', 'visible');
-          this.renderer.setStyle(menuContainer, 'opacity', '1');
-        } else {
-          this.renderer.setStyle(menuContainer, 'visibility', 'hidden');
-          this.renderer.setStyle(menuContainer, 'opacity', '0');
-        }
-      }
+  ngOnInit(): void {
+    this.routerSubscription = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      this.showMenu = event.url === '/about-me' || event.url === '/chronology';
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }
