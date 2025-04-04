@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pattaya&display=swap');
 
 .header {
   display: flex;
@@ -15,17 +15,32 @@
 .name-container {
   display: flex;
   position: absolute;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 6rem;
   width: 100%;
 
   .name-text {
     color: white;
-    font-size: 1.5rem;
-    font-family: 'Permanent Marker', cursive;
+    font-size: 2rem;
+    letter-spacing: 0.1rem;
+    font-family: 'Pattaya', sans-serif;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .name-subtitle {
+    position: absolute;
+    color: white;
+    font-size: 1rem;
+    font-family: 'Rubik', sans-serif;
+    opacity: 0;
+    top: 1rem;
+  }
+
+  &:hover .name-subtitle {
+    opacity: 1;
+    top: 1.75rem;
   }
 }
 
@@ -39,8 +54,7 @@
   width: 15%;
   height: 100%;
 
-  .linkedin-logo-container,
-  .github-logo-container {
+  .social-icon-container {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -48,13 +62,11 @@
     margin: 0 1.5rem;
   }
 
-  .linkedin-logo,
-  .github-logo {
+  .social-icon {
     width: 2.5rem;
   }
 
-  .linkedin-text,
-  .github-text {
+  .social-label {
     position: absolute;
     color: white;
     font-size: 1rem;
@@ -63,8 +75,7 @@
     top: 1rem;
   }
 
-  .linkedin-logo-container:hover .linkedin-text,
-  .github-logo-container:hover .github-text {
+  .social-icon-container:hover .social-label {
     opacity: 1;
     top: 1.75rem;
   }
@@ -84,6 +95,11 @@
   transition:
     opacity 0.2s ease-in-out,
     visibility 0.2s ease-in-out;
+
+  &.menu-visible {
+    visibility: visible;
+    opacity: 1;
+  }
 
   .menu {
     position: relative;
