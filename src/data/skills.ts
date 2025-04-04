@@ -51,7 +51,7 @@ export const SKILLS = [
   },
   {
     name: 'Google Colab',
-    level: 'Intermediate',
+    level: 'Advanced',
     thumbnail: 'icons/gcolab-icon.png',
   },
   {

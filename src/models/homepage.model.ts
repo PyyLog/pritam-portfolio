@@ -12,6 +12,7 @@ export interface Project {
   technologies: string[];
   thumbnail: string;
   illustration: string;
-  spanNames: string[];
+  state: string;
+  linkToCodeSpanNames: string[];
   pathToCodes: string[];
 }

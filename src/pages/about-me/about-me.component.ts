@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { SKILLS } from '../../data/skills';
-import { Skills } from '../../models/about-me-page.model';
+import { Skills } from '../../models/about-me.model';
 import gsap from 'gsap';
 
 @Component({

@@ -5,16 +5,35 @@ const links = LINKS;
 export const PROJECTS_DESCRIPTION = [
   {
     id: 1,
-    title: "Pritam's Portfolio",
+    title: `Pritam's Portfolio`,
     shortDescription: 'A personal portfolio website to showcase my projects and skills.',
     context: `This portfolio website was created to showcase my projects and skills as well as discover new
     technologies.`,
-    tasksDetails: [{ title: 'To be defined', points: [] }],
+    tasksDetails: [
+      {
+        title: 'Website design and animations',
+        points: [
+          'Designed a homepage with the projects and idle tabs and the navigation menu',
+          `Designed a 'About Me' page with a quick introduction and skills description`,
+          `Designed a 'Timeline' page with a quick description of my studies and experiences`,
+          'Made animations for some elements of the website',
+        ],
+      },
+      {
+        title: 'Website responsiveness',
+        points: ['Ensuring the website is responsive and works well on different devices', 'Testing the website on different browsers and devices'],
+      },
+      {
+        title: 'Deployment on GitHub Pages',
+        points: ['Creating a GitHub repository for the project', 'Using Git to manage the project and deploy it on GitHub Pages'],
+      },
+    ],
     technologies: ['TypeScript', 'Node.js', 'Angular'],
     thumbnail: 'pictures/portfolio-thumbnail-illustration.png',
     illustration: 'pictures/portfolio-thumbnail-illustration.png',
-    spanNames: [],
-    pathToCodes: [],
+    state: 'In Progress',
+    linkToCodeSpanNames: ['Code'],
+    pathToCodes: [links.portfolioProject],
   },
   {
     id: 2,
@@ -60,7 +79,8 @@ export const PROJECTS_DESCRIPTION = [
     technologies: ['TypeScript', 'Node.js', 'React', 'Vite', 'Python', 'Nest.js'],
     thumbnail: 'pictures/big-brain-thumbnail.png',
     illustration: 'pictures/big-brain-illustration.png',
-    spanNames: ['Code-DF', 'Code-BB', 'Code-SUSHI'],
+    state: 'Completed - Prototype',
+    linkToCodeSpanNames: ['Code-DF', 'Code-BB', 'Code-SUSHI'],
     pathToCodes: [links.dataforgeProject, links.bigbrainProject, links.sushiProject],
   },
   {
@@ -89,7 +109,8 @@ export const PROJECTS_DESCRIPTION = [
     technologies: ['TypeScript', 'Node.js', 'React', 'Vite', 'Discord SDK'],
     thumbnail: 'pictures/lumina-thumbnail.png',
     illustration: 'pictures/lumina-illustration.png',
-    spanNames: [],
+    state: 'Paused',
+    linkToCodeSpanNames: [],
     pathToCodes: [],
   },
   {
@@ -120,7 +141,8 @@ export const PROJECTS_DESCRIPTION = [
     technologies: ['Python', 'Scikit-learn', 'Pandas', 'Keras', 'Spacy', 'NLTK', 'Matplotlib', 'Seaborn'],
     thumbnail: 'pictures/sql-injections-prediction-thumbnail.png',
     illustration: 'pictures/sql-injections-prediction-illustration.png',
-    spanNames: ['Code'],
+    state: 'Completed',
+    linkToCodeSpanNames: ['Code'],
     pathToCodes: [links.sqlInjectionsPredictionProject],
   },
   {
@@ -161,7 +183,8 @@ export const PROJECTS_DESCRIPTION = [
     technologies: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'Seaborn'],
     thumbnail: 'pictures/adult-income-prediction-thumbnail.png',
     illustration: 'pictures/adult-income-prediction-illustration.png',
-    spanNames: ['Code'],
+    state: 'Completed',
+    linkToCodeSpanNames: ['Code'],
     pathToCodes: [links.adultIncomePredictionProject],
   },
   {
@@ -190,7 +213,8 @@ export const PROJECTS_DESCRIPTION = [
     technologies: ['Python', 'Pygame'],
     thumbnail: 'pictures/tetris-thumbnail.png',
     illustration: 'pictures/tetris-illustration.png',
-    spanNames: ['Code'],
+    state: 'Paused',
+    linkToCodeSpanNames: ['Code'],
     pathToCodes: [links.tetrisProject],
   },
 ];

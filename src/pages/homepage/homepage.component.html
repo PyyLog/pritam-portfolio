@@ -36,11 +36,17 @@
       <div class="projects-carousel" *ngIf="!selectedProject">
         <div class="project-item" *ngFor="let project of projects">
           <img [src]="project.thumbnail" alt="{{ project.title }}" />
+
           <div class="project-overlay">
+            <div class="project-state" [ngStyle]="{ background: setOverlayStateColor(project.state) }">
+              <p class="project-state-span">{{ project.state }}</p>
+            </div>
+
             <h3>{{ project.title }}</h3>
             <p>{{ project.shortDescription }}</p>
+
             <div class="technologies">
-              <span *ngFor="let tech of project.technologies">{{ tech }}</span>
+              <span *ngFor="let tech of project.technologies" class="techno-span">{{ tech }}</span>
             </div>
             <button class="read-more" (click)="showProjectDetails(project)">Read More</button>
           </div>
@@ -78,7 +84,7 @@
 
         <div class="path-to-code">
           <a *ngFor="let path of selectedProject.pathToCodes; let i = index" href="{{ path }}" target="_blank">
-            <span>{{ selectedProject.spanNames[i] }}</span>
+            <span>{{ selectedProject.linkToCodeSpanNames[i] }}</span>
           </a>
         </div>
       </div>

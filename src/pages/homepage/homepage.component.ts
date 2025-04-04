@@ -47,6 +47,18 @@ export class HomepageComponent implements AfterViewInit {
     this.selectedProject = null;
   }
 
+  setOverlayStateColor(state: string): string {
+    if (state === 'In Progress') {
+      return 'linear-gradient(180deg, gold, transparent)';
+    } else if (state === 'Prototype' || state === 'Completed - Prototype') {
+      return 'linear-gradient(180deg, teal, transparent)';
+    } else if (state === 'Completed') {
+      return 'linear-gradient(180deg, darkgreen, transparent)';
+    } else {
+      return 'linear-gradient(180deg, darkgray, transparent)';
+    }
+  }
+
   showProjectDetails(project: Project): void {
     this.selectedProject = project;
   }

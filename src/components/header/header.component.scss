@@ -38,7 +38,7 @@
     top: 1rem;
   }
 
-  &:hover .name-subtitle {
+  .name-text:hover + .name-subtitle {
     opacity: 1;
     top: 1.75rem;
   }
