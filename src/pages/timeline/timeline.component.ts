@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { EVENTS } from '../../data/chronology';
+import { EVENTS } from '../../data/timeline';
 import { TimelineEvent, colorTemplateByType } from '../../models/timeline.model';
 import gsap from 'gsap';
 
@@ -7,10 +7,10 @@ import gsap from 'gsap';
   selector: 'app-timeline-page',
   standalone: true,
   imports: [],
-  templateUrl: './timeline-page.component.html',
-  styleUrl: './timeline-page.component.scss',
+  templateUrl: './timeline.component.html',
+  styleUrl: './timeline.component.scss',
 })
-export class TimelinePageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly minLineWidth: number = 15;
   private readonly maxLineWidth: number = 50;
   private readonly circleSize: number = 3.5;

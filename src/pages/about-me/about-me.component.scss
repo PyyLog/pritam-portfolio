@@ -1,0 +1,203 @@
+.about-me-page {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 86vh;
+  z-index: 2;
+  overflow-x: hidden;
+
+  .about-me-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .circle {
+    width: 170%;
+    height: 150%;
+    border-radius: 50%;
+    background: linear-gradient(-90deg, rgba(70, 130, 180, 0.5), transparent);
+    position: absolute;
+    top: -25%;
+    left: 0;
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+
+  .about-me-text {
+    color: white;
+    font-family: Garamond, serif;
+    font-size: 5rem;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pritam-picture-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+  }
+
+  .pritam-picture {
+    width: 50%;
+  }
+
+  .introducing-text-container {
+    position: relative;
+    width: 40%;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 1rem;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+      display: block;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 0.5rem;
+    }
+  }
+
+  .introducing-text-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .introducing-text-title p {
+    color: white;
+    font-size: 2rem;
+    font-family: Garamond, serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+
+    span {
+      font-style: italic;
+    }
+  }
+
+  .introducing-text p {
+    align-content: center;
+    text-align: justify;
+    font-size: 1.5rem;
+    color: white;
+    font-family: Garamond, serif;
+    padding-right: 3rem;
+    margin: 0;
+  }
+
+  .skills-carousel-container {
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .skills-carousel-title {
+    padding: 0.5rem 0;
+  }
+
+  .skills-carousel-title p {
+    color: white;
+    font-size: 2rem;
+    font-family: Garamond, serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  .skills-carousel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    padding: 1rem 0;
+
+    &::-webkit-scrollbar {
+      height: 0.5rem;
+      display: block;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 0.25rem;
+    }
+  }
+
+  .skill-item {
+    position: relative;
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 6rem;
+    height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    background: #222222;
+    border: 0.1rem solid white;
+    border-radius: 15%;
+
+    img {
+      width: 70%;
+      height: auto;
+      object-fit: contain;
+      transition: filter 0.3s ease;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+
+      img {
+        filter: brightness(30%);
+      }
+
+      .skill-overlay {
+        opacity: 1;
+      }
+    }
+  }
+
+  .skill-overlay {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    text-align: center;
+    box-sizing: border-box;
+
+    h3 {
+      font-family: 'Garamond', serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 0.75rem;
+    }
+  }
+}

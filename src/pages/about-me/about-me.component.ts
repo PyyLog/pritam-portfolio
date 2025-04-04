@@ -8,10 +8,10 @@ import gsap from 'gsap';
   selector: 'app-about-me-page',
   standalone: true,
   imports: [NgForOf],
-  templateUrl: './about-me-page.component.html',
-  styleUrls: ['./about-me-page.component.scss'],
+  templateUrl: './about-me.component.html',
+  styleUrls: ['./about-me.component.scss'],
 })
-export class AboutMePageComponent implements AfterViewInit {
+export class AboutMeComponent implements AfterViewInit {
   pritamPicture = 'pictures/pritam-picture.png';
   skills: Skills[] = SKILLS;
 
