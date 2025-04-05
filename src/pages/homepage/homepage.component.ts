@@ -22,8 +22,8 @@ export class HomepageComponent implements AfterViewInit {
 
   constructor(private renderer: Renderer2) {}
 
-  @ViewChild('homepageContentContainer', { static: true }) homepageContentContainer!: ElementRef;
-  @ViewChild('navigation', { static: true }) navigation!: ElementRef;
+  @ViewChild('homepageContentContainer') homepageContentContainer!: ElementRef;
+  @ViewChild('navigation') navigation!: ElementRef;
 
   ngAfterViewInit() {
     gsap.from(this.homepageContentContainer.nativeElement, {

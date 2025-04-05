@@ -53,18 +53,24 @@
     position: relative;
     width: 40%;
     height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     padding-right: 1rem;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 
     &::-webkit-scrollbar {
       width: 0.5rem;
-      display: block;
+      display: block !important;
     }
 
     &::-webkit-scrollbar-thumb {
       background-color: rgba(255, 255, 255, 0.3);
       border-radius: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: block !important;
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 
@@ -124,17 +130,23 @@
     align-items: center;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     gap: 1rem;
     padding: 1rem 0;
 
     &::-webkit-scrollbar {
       height: 0.5rem;
-      display: block;
+      display: block !important;
     }
 
     &::-webkit-scrollbar-thumb {
       background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 0.25rem;
+      border-radius: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: block !important;
+      background: rgba(255, 255, 255, 0.1);
     }
   }
 
