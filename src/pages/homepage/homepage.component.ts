@@ -68,7 +68,7 @@ export class HomepageComponent implements AfterViewInit {
   }
 
   toggleContactText(event: Event): void {
-    const contactTextContainer = (event.target as HTMLElement).nextElementSibling;
+    const contactTextContainer: Element | null = (event.target as HTMLElement).nextElementSibling;
 
     if (contactTextContainer) {
       if (contactTextContainer.classList.contains('active')) {
