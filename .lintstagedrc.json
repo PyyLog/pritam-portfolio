@@ -1,11 +1,6 @@
 {
-  "*.ts": [
-    "prettier --write",
-    "eslint"
-  ],
-  "*.html": [
-    "eslint",
-    "prettier --write"
-  ],
-  "*.scss": "prettier --write"
+  "$schema": "https://json.schemastore.org/lintstagedrc.schema.json",
+  "*": "prettier --write --ignore-unknown",
+  "{src/**,__tests__/**}.{mjs,js,cjs,ts,tsx}": "eslint --fix",
+  "src/**/*.{css,scss}": "stylelint --fix --allow-empty-input"
 }
