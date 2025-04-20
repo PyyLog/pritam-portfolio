@@ -88,6 +88,7 @@
     height: 85%;
     margin-left: 2rem;
     border: 1rem solid white;
+    color: white;
     transition: filter 0.15s ease-in-out;
 
     &:hover {
@@ -161,6 +162,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      color: white;
       transition: filter 0.3s ease;
     }
 
@@ -315,6 +317,7 @@
     max-height: 45vh;
     object-fit: cover;
     margin-bottom: 1.5rem;
+    color: white;
   }
 
   .tech-stack {
