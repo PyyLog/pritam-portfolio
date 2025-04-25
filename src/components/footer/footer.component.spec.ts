@@ -18,15 +18,14 @@ describe('FooterComponent', () => {
   });
 
   // Verify that the component is created successfully
-  it('Should create', () => {
+  it('Should create', (): void => {
     expect(component).toBeTruthy();
   });
 
   // Verify that the footer text is displayed correctly
-  it('Should have the footer text', () => {
+  it('Should have the footer text', (): void => {
     const footerTextElement: DebugElement = fixture.debugElement.query(By.css('.copyright-text'));
     const footerText: string = footerTextElement.nativeElement.textContent;
-
     expect(footerText).toEqual('© Pritam Kantane 2025 - All rights reserved');
   });
 });
