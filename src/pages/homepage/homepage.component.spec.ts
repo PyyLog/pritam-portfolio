@@ -7,6 +7,19 @@ import { By } from '@angular/platform-browser';
 describe('HomepageComponent', (): void => {
   let component: HomepageComponent;
   let fixture: ComponentFixture<HomepageComponent>;
+  const mockProject = {
+    id: 1,
+    title: 'Test Project',
+    shortDescription: 'Test project short description',
+    context: 'Test context',
+    tasksDetails: [],
+    technologies: ['Angular', 'TypeScript'],
+    thumbnail: 'favicon.ico',
+    illustration: 'favicon.ico',
+    state: 'In Progress',
+    linkToCodeSpanNames: ['test1', 'test2'],
+    pathToCodes: ['test1', 'test2'],
+  };
 
   beforeEach(async (): Promise<void> => {
     await TestBed.configureTestingModule({
@@ -225,38 +238,12 @@ describe('HomepageComponent', (): void => {
 
   // Check if the selected project is set correctly when showProjectDetails is called
   it('Should set selectedProject when showProjectDetails is called', (): void => {
-    const mockProject = {
-      id: 1,
-      title: 'Test Project',
-      shortDescription: 'Test project short description',
-      context: 'Test context',
-      tasksDetails: [],
-      technologies: ['Angular', 'TypeScript'],
-      thumbnail: 'test.png',
-      illustration: 'test.png',
-      state: 'In Progress',
-      linkToCodeSpanNames: ['test1', 'test2'],
-      pathToCodes: ['test1', 'test2'],
-    };
     component.showProjectDetails(mockProject);
     expect(component.selectedProject).toBe(mockProject);
   });
 
   // Test for closeProjectDetails method
   it('Should set selectedProject to null when closeProjectDetails is called', (): void => {
-    const mockProject = {
-      id: 1,
-      title: 'Test Project',
-      shortDescription: 'Test project short description',
-      context: 'Test context',
-      tasksDetails: [],
-      technologies: ['Angular', 'TypeScript'],
-      thumbnail: 'test.png',
-      illustration: 'test.png',
-      state: 'In Progress',
-      linkToCodeSpanNames: ['test1', 'test2'],
-      pathToCodes: ['test1', 'test2'],
-    };
     component.selectedProject = mockProject;
     component.closeProjectDetails();
     expect(component.selectedProject).toBeNull();

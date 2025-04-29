@@ -15,9 +15,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
   private readonly minLineWidth: number = 15;
   private readonly maxLineWidth: number = 50;
   private readonly minWidthTimelineEventContainer = 12;
-  private readonly primaryCircleSize: number = 3.5;
-  private readonly secondaryCircleSize: number = 1.25;
-  private colorTemplateByType: colorTemplateByType = {
+  colorTemplateByType: colorTemplateByType = {
     base: 'white',
     education: 'white',
     experience: 'gold',
@@ -25,6 +23,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
   };
   events: Event[] = EVENTS;
   selectedEvent: Event | null = null;
+  primaryCircleSize = 3.5;
+  secondaryCircleSize = 1.25;
 
   @ViewChild('titleCircle') titleCircle!: ElementRef;
   @ViewChild('titleText') titleText!: ElementRef;
@@ -72,7 +72,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     const lastEventDate: number = new Date(this.events[this.events.length - 1].date).getTime();
     const totalTimeSpan: number = lastEventDate - firstEventDate;
 
-    setTimeout(() => {
+    setTimeout((): void => {
       const timelineEventContainers: NodeListOf<HTMLElement> = this.el.nativeElement.querySelectorAll('.timeline-event-container');
 
       this.events.forEach((event: Event, i: number) => {
