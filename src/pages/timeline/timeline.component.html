@@ -31,7 +31,7 @@
         <div class="event-point-container primary-event" *ngIf="event.importance === 'primary'">
           <div class="event-date-text primary-event-date"></div>
           <div
-            class="timeline-circle primary-circle"
+            class="event-circle primary-circle"
             (click)="event.description ? showEventDetails(event) : null"
             (keydown.enter)="showEventDetails(event); $event.preventDefault()"
             tabindex="0">
@@ -43,7 +43,7 @@
         <!-- Secondary event -->
         <div class="event-point-container secondary-event" *ngIf="event.importance === 'secondary'">
           <div
-            class="timeline-circle secondary-circle"
+            class="event-circle secondary-circle"
             (click)="event.description ? showEventDetails(event) : null"
             (keydown.enter)="showEventDetails(event); $event.preventDefault()"
             tabindex="0"></div>

@@ -22,7 +22,7 @@
     width: 170%;
     height: 150%;
     border-radius: 50%;
-    background: linear-gradient(-90deg, rgba(70, 130, 180, 0.5), transparent);
+    background: linear-gradient(-90deg, rgb(70 130 180 / 50%), transparent);
     position: absolute;
     top: -25%;
     left: 0;
@@ -57,13 +57,13 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 255, 255, 0.3);
+      background-color: rgb(255 255 255 / 30%);
       border-radius: 0.5rem;
     }
 
     &::-webkit-scrollbar-track {
       display: block !important;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgb(255 255 255 / 10%);
     }
   }
 
@@ -97,7 +97,7 @@
         background-color: #444;
         color: white;
         font-size: 0.85rem;
-        font-family: 'Rubik', sans-serif;
+        font-family: Rubik, sans-serif;
         text-decoration: none;
         cursor: pointer;
         border-radius: 0.5rem;
@@ -142,7 +142,7 @@
             text-decoration: none;
             color: white;
             font-size: 0.85rem;
-            font-family: 'Rubik', sans-serif;
+            font-family: Rubik, sans-serif;
             padding: 0.5rem;
             white-space: nowrap;
             cursor: pointer;
@@ -188,7 +188,14 @@
     height: 100%;
   }
 
-  .timeline-circle {
+  .event-thumbnail {
+    opacity: 0;
+    height: 60%;
+    width: auto;
+    color: white;
+  }
+
+  .event-circle {
     display: flex;
     position: relative;
     justify-content: center;
@@ -204,13 +211,6 @@
     .clickable {
       cursor: pointer;
     }
-  }
-
-  .event-thumbnail {
-    opacity: 0;
-    height: 60%;
-    width: auto;
-    color: white;
   }
 
   .event-date-text {
@@ -276,13 +276,13 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(255 255 255 / 30%);
     border-radius: 0.5rem;
   }
 
   &::-webkit-scrollbar-track {
     display: block !important;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(255 255 255 / 10%);
   }
 
   .close-btn {
@@ -303,7 +303,7 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    font-family: 'Garamond', serif;
+    font-family: Garamond, serif;
     font-size: 2rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
@@ -334,21 +334,20 @@
   .quick-info-container {
     display: flex;
     flex-direction: column;
-    align-content: center;
-    justify-content: center;
+    place-content: center center;
     width: 70%;
     height: 100%;
     margin-left: 2rem;
 
     h3 {
-      font-family: 'Rubik', sans-serif;
+      font-family: Rubik, sans-serif;
       font-size: 1.25rem;
       font-style: italic;
       text-decoration: underline;
     }
 
     p {
-      font-family: 'Rubik', sans-serif;
+      font-family: Rubik, sans-serif;
       font-size: 1rem;
     }
   }
@@ -356,13 +355,13 @@
   .event-description,
   .event-tasks-details {
     text-align: justify;
-    font-family: 'Rubik', sans-serif;
+    font-family: Rubik, sans-serif;
     line-height: 1.6;
   }
 
   .description-title-text,
   .details-title-text {
-    font-family: 'Rubik', sans-serif;
+    font-family: Rubik, sans-serif;
     font-style: italic;
     text-decoration: underline;
   }

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FooterComponent } from './footer.component';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -16,7 +17,15 @@ describe('FooterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  // Verify that the component is created successfully
+  it('Should create', (): void => {
     expect(component).toBeTruthy();
+  });
+
+  // Verify that the footer text is displayed correctly
+  it('Should have the footer text', (): void => {
+    const footerTextElement: DebugElement = fixture.debugElement.query(By.css('.copyright-text'));
+    const footerText: string = footerTextElement.nativeElement.textContent;
+    expect(footerText).toEqual('© Pritam Kantane 2025 - All rights reserved');
   });
 });
