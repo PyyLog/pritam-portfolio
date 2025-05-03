@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 .homepage {
   display: flex;
@@ -42,7 +42,7 @@
     color: white;
     text-decoration: none;
     font-size: 1.25rem;
-    font-family: 'Garamond', serif;
+    font-family: Garamond, serif;
     text-transform: uppercase;
     display: block;
     width: 100%;
@@ -83,6 +83,17 @@
     height: 68vh;
   }
 
+  .illustration-credits {
+    position: absolute;
+    color: white;
+    font-size: 0.85rem;
+    font-family: Rubik, sans-serif;
+    bottom: 0;
+    margin-left: 2rem;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+  }
+
   .illustration {
     width: 85%;
     height: 85%;
@@ -98,17 +109,6 @@
         opacity: 1;
       }
     }
-  }
-
-  .illustration-credits {
-    position: absolute;
-    color: white;
-    font-size: 0.85rem;
-    font-family: 'Rubik', sans-serif;
-    bottom: 0;
-    margin-left: 2rem;
-    opacity: 0;
-    transition: opacity 0.15s ease-in-out;
   }
 }
 
@@ -138,44 +138,13 @@
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 255, 255, 0.3);
+      background-color: rgb(255 255 255 / 30%);
       border-radius: 0.5rem;
     }
 
     &::-webkit-scrollbar-track {
       display: block !important;
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
-
-  .project-item {
-    position: relative;
-    scroll-snap-align: start;
-    flex: 0 0 auto;
-    width: 18vw;
-    height: 22vw;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    background: #222222;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      color: white;
-      transition: filter 0.3s ease;
-    }
-
-    &:hover {
-      transform: scale(1.02);
-
-      img {
-        filter: brightness(30%);
-      }
-
-      .project-overlay {
-        opacity: 1;
-      }
+      background: rgb(255 255 255 / 10%);
     }
   }
 
@@ -207,20 +176,20 @@
     }
 
     .project-state-span {
-      font-family: 'Rubik', sans-serif;
+      font-family: Rubik, sans-serif;
       font-weight: bold;
       font-size: 1rem;
     }
 
     h3 {
-      font-family: 'Garamond', serif;
+      font-family: Garamond, serif;
       font-size: 1.5rem;
       margin-bottom: 1rem;
       text-transform: uppercase;
     }
 
     p {
-      font-family: 'Rubik', sans-serif;
+      font-family: Rubik, sans-serif;
       font-size: 1rem;
       margin-bottom: 1.5rem;
     }
@@ -233,10 +202,10 @@
       margin-bottom: 1.5rem;
 
       .techno-span {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgb(255 255 255 / 20%);
         padding: 0.25rem 0.75rem;
         border-radius: 1rem;
-        font-family: 'Rubik', sans-serif;
+        font-family: Rubik, sans-serif;
         font-size: 0.8rem;
       }
     }
@@ -246,13 +215,44 @@
       border: 1px solid white;
       color: white;
       padding: 0.5rem 1rem;
-      font-family: 'Rubik', sans-serif;
+      font-family: Rubik, sans-serif;
       cursor: pointer;
       transition: all 0.2s ease;
 
       &:hover {
         background-color: white;
         color: black;
+      }
+    }
+  }
+
+  .project-item {
+    position: relative;
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 18vw;
+    height: 22vw;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    background: #222;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      color: white;
+      transition: filter 0.3s ease;
+    }
+
+    &:hover {
+      transform: scale(1.02);
+
+      img {
+        filter: brightness(30%);
+      }
+
+      .project-overlay {
+        opacity: 1;
       }
     }
   }
@@ -266,7 +266,7 @@
   left: 2rem;
   width: 55vw;
   height: 62vh;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgb(0 0 0 / 90%);
   padding: 2rem;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
@@ -280,13 +280,13 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(255 255 255 / 30%);
     border-radius: 0.5rem;
   }
 
   &::-webkit-scrollbar-track {
     display: block !important;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(255 255 255 / 10%);
   }
 
   .close-btn {
@@ -306,13 +306,13 @@
   h2 {
     display: flex;
     justify-content: center;
-    font-family: 'Garamond', serif;
+    font-family: Garamond, serif;
     font-size: 2rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
   }
 
-  img {
+  .project-details-illustration {
     width: 100%;
     max-height: 45vh;
     object-fit: cover;
@@ -327,23 +327,23 @@
     margin-bottom: 1.5rem;
 
     span {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgb(255 255 255 / 20%);
       padding: 0.25rem 0.75rem;
       border-radius: 1rem;
-      font-family: 'Rubik', sans-serif;
+      font-family: Rubik, sans-serif;
     }
   }
 
   .project-context,
   .project-tasks-details {
     text-align: justify;
-    font-family: 'Rubik', sans-serif;
+    font-family: Rubik, sans-serif;
     line-height: 1.6;
   }
 
   .context-title-text,
   .tasks-details-title-text {
-    font-family: 'Rubik', sans-serif;
+    font-family: Rubik, sans-serif;
     font-style: italic;
     text-decoration: underline;
   }
@@ -355,13 +355,13 @@
     margin-top: 1.5rem;
 
     span {
-      font-family: 'Rubik', sans-serif;
+      font-family: Rubik, sans-serif;
       border-radius: 1rem;
       padding: 0.25rem 0.75rem;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgb(255 255 255 / 20%);
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgb(255 255 255 / 50%);
       }
     }
 
@@ -392,7 +392,7 @@
     border-left: 0.1rem solid white;
   }
 
-  .navigation li {
+  .nav-li {
     position: relative;
     width: 100%;
     list-style-type: none;
@@ -408,7 +408,7 @@
     color: white;
     text-decoration: none;
     font-size: 1.75rem;
-    font-family: 'Garamond', serif;
+    font-family: Garamond, serif;
     text-transform: uppercase;
     width: 100%;
     text-align: center;
@@ -444,7 +444,7 @@
   .contact-text {
     text-align: center;
     color: white;
-    font-family: 'Rubik', sans-serif;
+    font-family: Rubik, sans-serif;
     font-size: 1rem;
     padding: 0 2rem;
   }

@@ -57,7 +57,7 @@
       <div class="project-details" *ngIf="selectedProject">
         <button class="close-btn" (click)="closeProjectDetails()">×</button>
         <h2>{{ selectedProject.title }}</h2>
-        <img [src]="selectedProject.illustration" alt="{{ selectedProject.title }}" />
+        <img class="project-details-illustration" [src]="selectedProject.illustration" alt="{{ selectedProject.title }}" />
 
         <div class="tech-stack">
           <span *ngFor="let tech of selectedProject.technologies">{{ tech }}</span>
@@ -95,9 +95,9 @@
   <div class="navigation-container">
     <div class="navigation">
       <ul #navigation>
-        <li><a class="about-me-btn" routerLink="/about-me">About Me</a></li>
-        <li><a class="timeline-btn" routerLink="/timeline">Timeline</a></li>
-        <li>
+        <li class="nav-li"><a class="about-me-btn" routerLink="/about-me">About Me</a></li>
+        <li class="nav-li"><a class="timeline-btn" routerLink="/timeline">Timeline</a></li>
+        <li class="nav-li">
           <button class="contact-btn" (click)="toggleContactText($event)">Contact</button>
           <div class="contact-text-container">
             <p class="contact-text">
