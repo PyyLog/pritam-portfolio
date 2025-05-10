@@ -1,12 +1,47 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HeaderComponent } from './header.component';
 import { DebugElement, Type } from '@angular/core';
 import { provideRouter, Route } from '@angular/router';
 
-describe('HeaderComponent', (): void => {
+interface Viewport {
+  width: number;
+  height: number;
+  name: string;
+}
+
+const VIEWPORTS: Record<string, Viewport> = {
+  mobile: { width: 320, height: 568, name: 'Mobile' }, // iPhone 5/SE
+  tablet: { width: 768, height: 1024, name: 'Tablet' }, // iPad
+  laptop: { width: 1920, height: 1080, name: 'Laptop' }, // 15" MacBook Pro
+  desktop: { width: 2560, height: 1440, name: 'Desktop' }, // 27" iMac
+};
+
+describe('HeaderComponent tests', (): void => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let originalWindowWidth: number;
+  let originalWindowHeight: number;
+
+  // Helper functions to resize the viewport for testing
+  function resizeViewport(viewport: Viewport | { width: number; height: number }): void {
+    if (!originalWindowWidth) originalWindowWidth = window.innerWidth;
+    if (!originalWindowHeight) originalWindowHeight = window.innerHeight;
+
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: viewport['width'] });
+    Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: viewport['height'] });
+
+    window.dispatchEvent(new Event('resize'));
+    fixture.detectChanges();
+  }
+
+  function resetViewport(): void {
+    if (originalWindowWidth && originalWindowHeight) {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: originalWindowWidth });
+      Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: originalWindowHeight });
+      window.dispatchEvent(new Event('resize'));
+    }
+  }
 
   beforeEach(async (): Promise<void> => {
     await TestBed.configureTestingModule({
@@ -23,6 +58,10 @@ describe('HeaderComponent', (): void => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach((): void => {
+    resetViewport();
   });
 
   // Verify that the component is created successfully
@@ -46,41 +85,81 @@ describe('HeaderComponent', (): void => {
   });
 
   // Verify if the social network buttons are working
-  it('Should have social networks button working', () => {
+  it('Should have social networks button working', (): void => {
     const snContainerElement: DebugElement = fixture.debugElement.query(By.css('.sn-container'));
-    // Fix potential issue: when you query for anchor tags
     const anchors: HTMLElement[] = snContainerElement.nativeElement.querySelectorAll('a');
     expect(anchors.length).toBeGreaterThan(0);
+
+    // Check that LinkedIn anchor has correct href
+    const linkedinAnchor: DebugElement = fixture.debugElement.query(By.css('.linkedin-logo-container a'));
+    expect(linkedinAnchor.attributes['href']).toBe(component.links.linkedin);
+    expect(linkedinAnchor.attributes['target']).toBe('_blank');
+
+    // Check GitHub anchor has correct href
+    const githubAnchor: DebugElement = fixture.debugElement.query(By.css('.github-logo-container a'));
+    expect(githubAnchor.attributes['href']).toBe(component.links.github);
+    expect(githubAnchor.attributes['target']).toBe('_blank');
   });
 
   // Verify that the component has a navigation bar
-  it('Should have a menu burger', (): void => {
-    const navElement: DebugElement = fixture.debugElement.query(By.css('ul'));
+  it('Should have a navigation menu', (): void => {
+    const navElement: DebugElement = fixture.debugElement.query(By.css('.menu-list'));
     expect(navElement).toBeTruthy();
   });
 
   // Verify that the navigation bar has different links
   it('Should display menu links', (): void => {
-    const navLinks: DebugElement[] = fixture.debugElement.queryAll(By.css('li a'));
-    expect(navLinks.length).toBeGreaterThan(0);
+    const navLinks: DebugElement[] = fixture.debugElement.queryAll(By.css('.menu-list li a'));
+    expect(navLinks.length).toBe(3); // Should have exactly 3 nav links based on HTML
+
+    // Verify specific link text
+    const linkTexts = navLinks.map(link => link.nativeElement.textContent.trim());
+    expect(linkTexts).toContain('About Me');
+    expect(linkTexts).toContain('Timeline');
+    expect(linkTexts).toContain('Projects');
   });
 
-  // Verify that the navigation links are working
-  it('Should navigate to the different links', (): void => {
-    const homepageNavLink: DebugElement = fixture.debugElement.query(By.css('[routerLink=""]'));
+  // Verify that the navigation links have proper routes
+  it('Should have correct routes for navigation links', (): void => {
     const aboutMeNavLink: DebugElement = fixture.debugElement.query(By.css('[routerLink="/about-me"]'));
     const timelineNavLink: DebugElement = fixture.debugElement.query(By.css('[routerLink="/timeline"]'));
-    const projectsNavLink: DebugElement = fixture.debugElement.query(By.css('[routerLink=""]'));
 
-    // If specific links aren't found, at least verify we have some navigation links
-    if (!homepageNavLink || !aboutMeNavLink || !timelineNavLink || !projectsNavLink) {
-      const allLinks: DebugElement[] = fixture.debugElement.queryAll(By.css('a'));
-      expect(allLinks.length).toBeGreaterThan(0);
-    } else {
-      expect(homepageNavLink).toBeTruthy();
-      expect(aboutMeNavLink).toBeTruthy();
-      expect(timelineNavLink).toBeTruthy();
-      expect(projectsNavLink).toBeTruthy();
-    }
+    expect(aboutMeNavLink.attributes['routerLink']).toBe('/about-me');
+    expect(timelineNavLink.attributes['routerLink']).toBe('/timeline');
+
+    const viewportSequence: string[] = ['laptop', 'desktop'];
+
+    viewportSequence.forEach(viewport => {
+      resizeViewport(VIEWPORTS[viewport]);
+      fixture.detectChanges();
+
+      const menuButton: DebugElement = fixture.debugElement.query(By.css('.menu-button'));
+      const homePageNavLink: DebugElement = fixture.debugElement.query(By.css('[routerLink=""]'));
+      expect(menuButton).toBeTruthy();
+      expect(component.isMobileOrTablet).toBeFalse();
+      expect(homePageNavLink.attributes['routerLink']).toBe('');
+    });
   });
+
+  // Verify header elements alignment during resize
+  it('Should maintain header elements alignment during resize', fakeAsync((): void => {
+    // Test multiple resize scenarios
+    const viewportSequence: string[] = ['mobile', 'tablet', 'laptop', 'desktop'];
+
+    viewportSequence.forEach(viewport => {
+      resizeViewport(VIEWPORTS[viewport]);
+      tick(100);
+      fixture.detectChanges();
+
+      // Verify name container is still visible and properly sized
+      const nameContainer: DebugElement = fixture.debugElement.query(By.css('.name-container'));
+      expect(nameContainer.nativeElement.offsetHeight).toBeGreaterThan(0);
+      expect(nameContainer.nativeElement.offsetWidth).toBeGreaterThan(0);
+
+      // Verify social icons container is still visible
+      const socialContainer: DebugElement = fixture.debugElement.query(By.css('.sn-container'));
+      expect(socialContainer.nativeElement.offsetHeight).toBeGreaterThan(0);
+      expect(socialContainer.nativeElement.offsetWidth).toBeGreaterThan(0);
+    });
+  }));
 });
