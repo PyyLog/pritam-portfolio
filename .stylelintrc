@@ -12,6 +12,9 @@
       {
         "message": "Expected id to be defined as kebab-case"
       }
-    ]
+    ],
+    "at-rule-no-unknown": null,
+    "no-invalid-position-at-import-rule": null,
+    "media-query-no-invalid": null
   }
 }
