@@ -1,11 +1,42 @@
+@use 'sass:map';
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+/* Breakpoints definition following the logic of min-width */
+$breakpoints: (
+  mobile: 320px,
+  tablet: 768px,
+  laptop: 1280px,
+  desktop: 1920px,
+);
+
+@mixin respond-to($device, $orientation: null) {
+  @if map.has-key($breakpoints, $device) {
+    @if $orientation {
+      @media (min-width: map.get($breakpoints, $device)) and (orientation: $orientation) {
+        @content;
+      }
+    }
+
+ @else {
+      @media (min-width: map.get($breakpoints, $device)) {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin orientation($direction) {
+  @media (orientation: $direction) {
+    @content;
+  }
+}
 
 .footer {
   display: flex;
   position: absolute;
   justify-content: center;
   align-items: center;
-  height: 4vh;
   width: 100%;
   background: black;
   bottom: 0;
@@ -13,7 +44,54 @@
 
   .copyright-text {
     color: white;
-    font-size: 0.75rem;
     font-family: Rubik, sans-serif;
+  }
+
+  @include respond-to(mobile, 'portrait') {
+    height: 5vh;
+
+    .copyright-text {
+      font-size: 1.5vh;
+    }
+  }
+
+  @include respond-to(mobile, 'landscape') {
+    height: 4vh;
+
+    .copyright-text {
+      font-size: 2.5vh;
+    }
+  }
+
+  @include respond-to(tablet, 'portrait') {
+    height: 4vh;
+
+    .copyright-text {
+      font-size: 1.5vh;
+    }
+  }
+
+  @include respond-to(tablet, 'landscape') {
+    height: 4vh;
+
+    .copyright-text {
+      font-size: 1.5vh;
+    }
+  }
+
+  @include respond-to(laptop, 'landscape') {
+    height: 4vh;
+
+    .copyright-text {
+      font-size: 1.5vh;
+    }
+  }
+
+  @include respond-to(desktop, 'landscape') {
+    height: 4vh;
+
+    .copyright-text {
+      font-size: 1.75vh;
+    }
   }
 }
