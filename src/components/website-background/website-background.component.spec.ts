@@ -24,14 +24,14 @@ describe('WebsiteBackgroundComponent', (): void => {
 
   // Test if shooting stars rows are created correctly
   it('Should create correct number of shooting star rows', (): void => {
-    const numRows = 6;
+    const numRows = 10;
     const rows: DebugElement[] = fixture.debugElement.queryAll(By.css('.shooting-stars-row'));
     expect(rows.length).toBe(numRows);
   });
 
   // Verify if shooting stars are created correctly in each row
   it('Should create correct number of shooting stars in each row', (): void => {
-    const numCols = 4;
+    const numCols = 10;
     const rows: DebugElement[] = fixture.debugElement.queryAll(By.css('.shooting-stars-row'));
     rows.forEach(row => {
       const stars: DebugElement[] = row.queryAll(By.css('.shooting-star'));
