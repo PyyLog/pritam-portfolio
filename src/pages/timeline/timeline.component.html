@@ -10,16 +10,20 @@
       <!-- Education Menu -->
       <div class="menu-container">
         <div class="menu">
-          <a class="menu-button">Education</a>
-          <ul class="education-menu-list"></ul>
+          <a class="menu-button" (click)="toggleEducationMenu()" (keydown.enter)="toggleEducationMenu(); $event.preventDefault()" tabindex="0">
+            Education
+          </a>
+          <ul class="education-menu-list" [class.show]="isEducationMenuActive"></ul>
         </div>
       </div>
 
       <!-- Experiences Menu -->
       <div class="menu-container">
         <div class="menu">
-          <a class="menu-button">Experiences</a>
-          <ul class="experiences-menu-list"></ul>
+          <a class="menu-button" (click)="toggleExperiencesMenu()" (keydown.enter)="toggleExperiencesMenu(); $event.preventDefault()" tabindex="0">
+            Experiences
+          </a>
+          <ul class="experiences-menu-list" [class.show]="isExperiencesMenuActive"></ul>
         </div>
       </div>
     </div>

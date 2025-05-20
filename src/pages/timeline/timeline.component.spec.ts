@@ -3,9 +3,24 @@ import { TimelineComponent } from './timeline.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+interface Viewport {
+  width: number;
+  height: number;
+  name: string;
+}
+
+const VIEWPORTS: Record<string, Viewport> = {
+  mobile: { width: 320, height: 568, name: 'Mobile' }, // iPhone 5/SE
+  tablet: { width: 768, height: 1024, name: 'Tablet' }, // iPad
+  laptop: { width: 1920, height: 1080, name: 'Laptop' }, // 15" MacBook Pro
+  desktop: { width: 2560, height: 1440, name: 'Desktop' }, // 27" iMac
+};
+
 describe('TimelineComponent', (): void => {
   let component: TimelineComponent;
   let fixture: ComponentFixture<TimelineComponent>;
+  let originalWindowWidth: number;
+  let originalWindowHeight: number;
   const mockEvent = {
     id: 1,
     date: new Date(2000, 0, 1),
@@ -22,6 +37,35 @@ describe('TimelineComponent', (): void => {
     illustrationType: 1,
   };
 
+  // Helper functions to resize the viewport for testing
+  function resizeViewport(viewport: Viewport | { width: number; height: number }): void {
+    if (!originalWindowWidth) originalWindowWidth = window.innerWidth;
+    if (!originalWindowHeight) originalWindowHeight = window.innerHeight;
+
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: viewport['width'] });
+    Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: viewport['height'] });
+
+    window.dispatchEvent(new Event('resize'));
+    fixture.detectChanges();
+  }
+
+  function resetViewport(): void {
+    if (originalWindowWidth && originalWindowHeight) {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: originalWindowWidth });
+      Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: originalWindowHeight });
+      window.dispatchEvent(new Event('resize'));
+    }
+  }
+
+  function hasOverflow(element: HTMLElement): boolean {
+    return element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;
+  }
+
+  function hasTextOverflow(element: HTMLElement): boolean {
+    const style: CSSStyleDeclaration = window.getComputedStyle(element);
+    return (style.overflow === 'hidden' || style.textOverflow === 'ellipsis') && element.scrollWidth > element.clientWidth;
+  }
+
   beforeEach(async (): Promise<void> => {
     await TestBed.configureTestingModule({
       imports: [TimelineComponent],
@@ -30,6 +74,10 @@ describe('TimelineComponent', (): void => {
     fixture = TestBed.createComponent(TimelineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach((): void => {
+    resetViewport();
   });
 
   // Verify that the component is created successfully
@@ -288,5 +336,110 @@ describe('TimelineComponent', (): void => {
     tick();
     fixture.detectChanges();
     expect(component.selectedEvent).toBeNull();
+  }));
+
+  // Test to verify if the title and circle don't overflow
+  it('Should not overflow - title and circle', fakeAsync((): void => {
+    Object.values(VIEWPORTS).forEach((viewport: Viewport): void => {
+      resizeViewport(viewport);
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+
+      const titleCircleElement: DebugElement = fixture.debugElement.query(By.css('.circle'));
+      const timelineTitleElement: DebugElement = fixture.debugElement.query(By.css('.timeline-text'));
+      expect(titleCircleElement).toBeTruthy();
+      expect(timelineTitleElement).toBeTruthy();
+
+      expect(hasOverflow(titleCircleElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(titleCircleElement.nativeElement)).toBeFalsy();
+    });
+  }));
+
+  // Test to verify if the timeline elements don't overflow
+  it('Should not overflow - timeline elements', fakeAsync((): void => {
+    Object.values(VIEWPORTS).forEach((viewport: Viewport): void => {
+      resizeViewport(viewport);
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+
+      const eventDateTexts: DebugElement[] = fixture.debugElement.queryAll(By.css('.event-date-text'));
+      const eventTitleTexts: DebugElement[] = fixture.debugElement.queryAll(By.css('.event-title-text'));
+      expect(eventDateTexts.length).toBeGreaterThan(0);
+      expect(eventTitleTexts.length).toBeGreaterThan(0);
+
+      eventDateTexts.forEach((event: DebugElement): void => {
+        expect(hasTextOverflow(event.nativeElement)).toBeFalsy();
+      });
+
+      eventTitleTexts.forEach((event: DebugElement): void => {
+        expect(hasTextOverflow(event.nativeElement)).toBeFalsy();
+      });
+    });
+  }));
+
+  // Test to verify if the menu tabs don't overflow
+  it('Should not overflow - menu tabs', fakeAsync((): void => {
+    Object.values(VIEWPORTS).forEach((viewport: Viewport): void => {
+      resizeViewport(viewport);
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+
+      const menuTabsContainer: DebugElement = fixture.debugElement.query(By.css('.menu-tabs-container'));
+      const menuContainer: DebugElement = fixture.debugElement.query(By.css('.menu-container'));
+      expect(menuTabsContainer).toBeTruthy();
+      expect(menuContainer).toBeTruthy();
+      expect(hasOverflow(menuTabsContainer.nativeElement)).toBeFalsy();
+      expect(hasOverflow(menuContainer.nativeElement)).toBeFalsy();
+    });
+  }));
+
+  // Test to verify if the event details elements don't overflow
+  it('Should not overflow - event details', fakeAsync((): void => {
+    Object.values(VIEWPORTS).forEach((viewport: Viewport): void => {
+      resizeViewport(viewport);
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+
+      // Click on the event circle to show event details
+      const eventCircles: DebugElement[] = fixture.debugElement.queryAll(By.css('.event-circle'));
+      expect(eventCircles.length).toBeGreaterThan(0);
+      eventCircles[1].nativeElement.click();
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+
+      const closeButtonElement: DebugElement = fixture.debugElement.query(By.css('.close-btn'));
+      const eventTitleElement: DebugElement = fixture.debugElement.query(By.css('.event-title'));
+      const illustrationContainer: DebugElement = fixture.debugElement.query(By.css('.illustration-container'));
+      const locationElement: DebugElement = fixture.debugElement.query(By.css('.location'));
+      const dateRangeElement: DebugElement = fixture.debugElement.query(By.css('.date-range'));
+      const eventDescriptionElement: DebugElement = fixture.debugElement.query(By.css('.event-description'));
+      const descriptionTitleElement: DebugElement = fixture.debugElement.query(By.css('.description-title-text'));
+      const eventTasksDetailsElement: DebugElement = fixture.debugElement.query(By.css('.event-tasks-details'));
+      const detailsTitleElement: DebugElement = fixture.debugElement.query(By.css('.details-title-text'));
+      expect(closeButtonElement).toBeTruthy();
+      expect(eventTitleElement).toBeTruthy();
+      expect(illustrationContainer).toBeTruthy();
+      expect(locationElement).toBeTruthy();
+      expect(dateRangeElement).toBeTruthy();
+      expect(eventDescriptionElement).toBeTruthy();
+      expect(descriptionTitleElement).toBeTruthy();
+      expect(eventTasksDetailsElement).toBeTruthy();
+      expect(detailsTitleElement).toBeTruthy();
+
+      expect(hasOverflow(closeButtonElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(eventTitleElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(illustrationContainer.nativeElement)).toBeFalsy();
+      expect(hasOverflow(locationElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(dateRangeElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(eventDescriptionElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(descriptionTitleElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(eventTasksDetailsElement.nativeElement)).toBeFalsy();
+      expect(hasOverflow(detailsTitleElement.nativeElement)).toBeFalsy();
+    });
   }));
 });
