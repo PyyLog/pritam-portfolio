@@ -4,9 +4,24 @@ import { provideRouter, Route } from '@angular/router';
 import { DebugElement, Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+interface Viewport {
+  width: number;
+  height: number;
+  name: string;
+}
+
+const VIEWPORTS: Record<string, Viewport> = {
+  mobile: { width: 320, height: 568, name: 'Mobile' }, // iPhone 5/SE
+  tablet: { width: 768, height: 1024, name: 'Tablet' }, // iPad
+  laptop: { width: 1920, height: 1080, name: 'Laptop' }, // 15" MacBook Pro
+  desktop: { width: 2560, height: 1440, name: 'Desktop' }, // 27" iMac
+};
+
 describe('HomepageComponent', (): void => {
   let component: HomepageComponent;
   let fixture: ComponentFixture<HomepageComponent>;
+  let originalWindowWidth: number;
+  let originalWindowHeight: number;
   const mockProject = {
     id: 1,
     title: 'Test Project',
@@ -20,6 +35,35 @@ describe('HomepageComponent', (): void => {
     linkToCodeSpanNames: ['test1', 'test2'],
     pathToCodes: ['test1', 'test2'],
   };
+
+  // Helper functions to resize the viewport for testing
+  function resizeViewport(viewport: Viewport | { width: number; height: number }): void {
+    if (!originalWindowWidth) originalWindowWidth = window.innerWidth;
+    if (!originalWindowHeight) originalWindowHeight = window.innerHeight;
+
+    Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: viewport['width'] });
+    Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: viewport['height'] });
+
+    window.dispatchEvent(new Event('resize'));
+    fixture.detectChanges();
+  }
+
+  function resetViewport(): void {
+    if (originalWindowWidth && originalWindowHeight) {
+      Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: originalWindowWidth });
+      Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: originalWindowHeight });
+      window.dispatchEvent(new Event('resize'));
+    }
+  }
+
+  function hasOverflow(element: HTMLElement): boolean {
+    return element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;
+  }
+
+  function hasTextOverflow(element: HTMLElement): boolean {
+    const style: CSSStyleDeclaration = window.getComputedStyle(element);
+    return (style.overflow === 'hidden' || style.textOverflow === 'ellipsis') && element.scrollWidth > element.clientWidth;
+  }
 
   beforeEach(async (): Promise<void> => {
     await TestBed.configureTestingModule({
@@ -36,6 +80,10 @@ describe('HomepageComponent', (): void => {
     fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach((): void => {
+    resetViewport();
   });
 
   // Verify that the component is created successfully
@@ -247,5 +295,147 @@ describe('HomepageComponent', (): void => {
     component.selectedProject = mockProject;
     component.closeProjectDetails();
     expect(component.selectedProject).toBeNull();
+  });
+
+  // Test to verify navigation menu doesn't overflow on mobile devices
+  it('Should not have navigation menu overflow on mobile', (): void => {
+    resizeViewport(VIEWPORTS['mobile']);
+
+    const navContainer: DebugElement = fixture.debugElement.query(By.css('nav'));
+    expect(navContainer).toBeTruthy();
+
+    const navElement: HTMLElement = navContainer.nativeElement;
+    expect(hasOverflow(navElement)).toBeFalsy();
+  });
+
+  // Test to verify quick tabs container doesn't overflow on mobile
+  it('Should not have quick tabs overflow on mobile', (): void => {
+    resizeViewport(VIEWPORTS['mobile']);
+
+    const quickTabsContainer: DebugElement = fixture.debugElement.query(By.css('.quick-tabs-container'));
+    expect(quickTabsContainer).toBeTruthy();
+
+    const quickTabsElement: HTMLElement = quickTabsContainer.nativeElement;
+    expect(hasOverflow(quickTabsElement)).toBeFalsy();
+  });
+
+  // Test to verify project carousel doesn't have horizontal overflow on mobile
+  it('Should not have project carousel horizontal overflow on mobile', (): void => {
+    resizeViewport(VIEWPORTS['mobile']);
+
+    // Make sure we're on the projects tab
+    component.switchTab('projects');
+    fixture.detectChanges();
+
+    const projectsCarousel: DebugElement = fixture.debugElement.query(By.css('.projects-carousel'));
+    expect(projectsCarousel).toBeTruthy();
+
+    const carouselElement: HTMLElement = projectsCarousel.nativeElement;
+    expect(carouselElement).toBeTruthy();
+
+    // Check that the carousel doesn't overflow horizontally (vertical scrolling might be intentional)
+    const style: CSSStyleDeclaration = window.getComputedStyle(carouselElement);
+    const hasHorizontalOverflow: boolean =
+      carouselElement.scrollWidth > carouselElement.clientWidth && style.overflowX !== 'auto' && style.overflowX !== 'scroll';
+
+    expect(hasHorizontalOverflow).toBeFalsy();
+  });
+
+  // Test to verify project details don't overflow on mobile when opened
+  it('Should not have project details overflow on mobile when opened', (): void => {
+    resizeViewport(VIEWPORTS['mobile']);
+
+    // Open project details
+    const readMoreButtonElement: DebugElement = fixture.debugElement.query(By.css('.read-more'));
+    expect(readMoreButtonElement).toBeTruthy();
+    readMoreButtonElement.nativeElement.click();
+    fixture.detectChanges();
+
+    const projectDetails: DebugElement = fixture.debugElement.query(By.css('.project-details'));
+    expect(projectDetails).toBeTruthy();
+
+    const projectDetailsElement: HTMLElement = projectDetails.nativeElement;
+    expect(projectDetailsElement).toBeTruthy();
+
+    // For project details, horizontal overflow should not happen (vertical scrolling might be intentional here too)
+    const style: CSSStyleDeclaration = window.getComputedStyle(projectDetailsElement);
+    const hasHorizontalOverflow: boolean =
+      projectDetailsElement.scrollWidth > projectDetailsElement.clientWidth && style.overflowX !== 'auto' && style.overflowX !== 'scroll';
+
+    expect(hasHorizontalOverflow).toBeFalsy();
+  });
+
+  // Test to verify contact text container doesn't overflow on mobile
+  it('Should not have contact text container overflow on mobile', (): void => {
+    resizeViewport(VIEWPORTS['mobile']);
+
+    const contactTextContainer: DebugElement = fixture.debugElement.query(By.css('.contact-text-container'));
+    expect(contactTextContainer).toBeTruthy();
+
+    const contactTextElement: HTMLElement = contactTextContainer.nativeElement;
+    expect(hasOverflow(contactTextElement)).toBeFalsy();
+  });
+
+  // Test to verify illustration doesn't overflow on tablet when displayed
+  it('Should not have illustration overflow on tablet', (): void => {
+    resizeViewport(VIEWPORTS['tablet']);
+
+    // Switch to idle tab to show illustration
+    component.switchTab('idle');
+    fixture.detectChanges();
+
+    const illustrationContainer: DebugElement = fixture.debugElement.query(By.css('.illustration-container'));
+    const illustrationElement: DebugElement = fixture.debugElement.query(By.css('.illustration'));
+    expect(illustrationContainer).toBeTruthy();
+    expect(illustrationElement).toBeTruthy();
+
+    // The image should not cause its container to overflow
+    const illustrationHTMLElement: HTMLElement = illustrationElement.nativeElement;
+    const illustrationContainerHTMLElement: HTMLElement = illustrationContainer.nativeElement;
+    expect(illustrationHTMLElement).toBeTruthy();
+    expect(illustrationContainerHTMLElement).toBeTruthy();
+    expect(hasOverflow(illustrationContainerHTMLElement)).toBeFalsy();
+  });
+
+  // Test the layout across all viewports
+  Object.keys(VIEWPORTS).forEach((viewportKey: string): void => {
+    const viewport: Viewport = VIEWPORTS[viewportKey];
+
+    it(`Should have proper layout without overflow on ${viewport.name}`, (): void => {
+      resizeViewport(viewport);
+
+      // Check that the homepage content container doesn't overflow
+      const homepageContentContainer: DebugElement = fixture.debugElement.query(By.css('.homepage-content-container'));
+      expect(homepageContentContainer).toBeTruthy();
+
+      const mainElement: HTMLElement = homepageContentContainer.nativeElement;
+      expect(hasOverflow(mainElement)).toBeFalsy();
+
+      // Check that the body doesn't have overflow
+      const bodyElement: HTMLElement = document.body;
+      const hasBodyOverflow: boolean =
+        bodyElement.scrollWidth > window.innerWidth &&
+        window.getComputedStyle(bodyElement).overflowX !== 'auto' &&
+        window.getComputedStyle(bodyElement).overflowX !== 'scroll';
+
+      expect(hasBodyOverflow).toBeFalsy();
+    });
+  });
+
+  // Test project titles don't overflow in the project list
+  it('Should not have project titles overflow in the carousel on mobile', (): void => {
+    resizeViewport(VIEWPORTS['mobile']);
+
+    // Make sure we're on the projects tab
+    component.switchTab('projects');
+    fixture.detectChanges();
+
+    const projectItems: DebugElement[] = fixture.debugElement.queryAll(By.css('.project-item'));
+    expect(projectItems.length).toBeGreaterThan(0);
+
+    for (const titleElement of projectItems) {
+      const titleHTMLElement: HTMLElement = titleElement.nativeElement;
+      expect(hasTextOverflow(titleHTMLElement)).toBeFalsy();
+    }
   });
 });

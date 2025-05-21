@@ -2,9 +2,10 @@
   <div #homepageContentContainer class="homepage-content-container">
     <!-- Tab Navigation -->
     <nav class="quick-tabs-container">
-      <ul>
-        <li>
+      <ul class="quick-tabs-ul">
+        <li class="quick-tabs-li">
           <a
+            class="quick-tabs-a"
             [class.active]="activeTab === 'idle'"
             (click)="switchTab('idle'); $event.preventDefault()"
             (keydown.enter)="switchTab('idle'); $event.preventDefault()"
@@ -12,8 +13,9 @@
             >Idle</a
           >
         </li>
-        <li>
+        <li class="quick-tabs-li">
           <a
+            class="quick-tabs-a"
             [class.active]="activeTab === 'projects'"
             (click)="switchTab('projects'); $event.preventDefault()"
             (keydown.enter)="switchTab('projects'); $event.preventDefault()"
@@ -34,10 +36,10 @@
     <section class="projects-container" *ngIf="activeTab === 'projects'">
       <!-- Project Carousel -->
       <div class="projects-carousel" *ngIf="!selectedProject">
-        <div class="project-item" *ngFor="let project of projects">
+        <div class="project-item" *ngFor="let project of projects; let i = index" (click)="handleProjectElementClick($event, i)">
           <img [src]="project.thumbnail" alt="{{ project.title }}" />
 
-          <div class="project-overlay">
+          <div class="project-overlay" [ngClass]="{ 'overlay-show': isProjectActive(i) && isMobileOrTablet }">
             <div class="project-state" [ngStyle]="{ background: setOverlayStateColor(project.state) }">
               <p class="project-state-span">{{ project.state }}</p>
             </div>
@@ -48,7 +50,7 @@
             <div class="technologies">
               <span *ngFor="let tech of project.technologies" class="techno-span">{{ tech }}</span>
             </div>
-            <button class="read-more" (click)="showProjectDetails(project)">Read More</button>
+            <button class="read-more" (click)="showProjectDetails(project); $event.stopPropagation()">Read More</button>
           </div>
         </div>
       </div>
@@ -94,7 +96,7 @@
   <!-- Side Navigation -->
   <div class="navigation-container">
     <div class="navigation">
-      <ul #navigation>
+      <ul class="nav-ul" #navigation>
         <li class="nav-li"><a class="about-me-btn" routerLink="/about-me">About Me</a></li>
         <li class="nav-li"><a class="timeline-btn" routerLink="/timeline">Timeline</a></li>
         <li class="nav-li">
