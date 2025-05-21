@@ -29,15 +29,32 @@ $breakpoints: (
 
     @if $orientation {
       /* With orientation parameter - ensures specific device + orientation combination */
-      @if $max {
-        @media only screen and (min-width: $min) and (max-width: $max) and (orientation: $orientation) {
-          @content;
+      @if $orientation == landscape {
+        @if $max {
+          @media only screen and (min-width: $min + 200px) and (max-width: $max + 200px) and (orientation: $orientation) {
+            @content;
+          }
+        }
+
+ @else {
+          @media only screen and (min-width: $min + 200px) and (orientation: $orientation) {
+            @content;
+          }
         }
       }
 
  @else {
-        @media only screen and (min-width: $min) and (orientation: $orientation) {
-          @content;
+        /* Portrait or other orientations remain unchanged */
+        @if $max {
+          @media only screen and (min-width: $min) and (max-width: $max) and (orientation: $orientation) {
+            @content;
+          }
+        }
+
+ @else {
+          @media only screen and (min-width: $min) and (orientation: $orientation) {
+            @content;
+          }
         }
       }
     }

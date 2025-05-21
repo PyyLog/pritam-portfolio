@@ -1,8 +1,85 @@
+@use 'sass:map';
+
+$breakpoints: (
+  mobile: (
+    min: 320px,
+    max: 767px,
+  ),
+  tablet: (
+    min: 768px,
+    max: 1279px,
+  ),
+  laptop: (
+    min: 1280px,
+    max: 1919px,
+  ),
+  desktop: (
+    min: 1920px,
+    max: null,
+  ),
+);
+
+@mixin respond-to($device, $orientation: null) {
+  @if map-has-key($breakpoints, $device) {
+    $device-data: map-get($breakpoints, $device);
+    $min: map-get($device-data, min);
+    $max: map-get($device-data, max);
+
+    @if $orientation {
+      /* With orientation parameter - ensures specific device + orientation combination */
+      @if $orientation == landscape {
+        @if $max {
+          @media only screen and (min-width: $min + 200px) and (max-width: $max + 200px) and (orientation: $orientation) {
+            @content;
+          }
+        }
+
+ @else {
+          @media only screen and (min-width: $min + 200px) and (orientation: $orientation) {
+            @content;
+          }
+        }
+      }
+
+ @else {
+        /* Portrait or other orientations remain unchanged */
+        @if $max {
+          @media only screen and (min-width: $min) and (max-width: $max) and (orientation: $orientation) {
+            @content;
+          }
+        }
+
+ @else {
+          @media only screen and (min-width: $min) and (orientation: $orientation) {
+            @content;
+          }
+        }
+      }
+    }
+
+ @else {
+      /* Without orientation parameter - applies to the device regardless of orientation */
+      @if $max {
+        @media only screen and (min-width: $min) and (max-width: $max) {
+          @content;
+        }
+      }
+
+ @else {
+        @media only screen and (min-width: $min) {
+          @content;
+        }
+      }
+    }
+  }
+
+ @else {
+    @error "Unknown device '#{$device}'.";
+  }
+}
+
 .about-me-page {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 86vh;
   z-index: 2;
   overflow-x: hidden;
 
@@ -10,208 +87,845 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30%;
-    height: 100%;
     position: relative;
     overflow: hidden;
-  }
 
-  .circle {
-    width: 170%;
-    height: 150%;
-    border-radius: 50%;
-    background: linear-gradient(-90deg, rgba(70, 130, 180, 0.5), transparent);
-    position: absolute;
-    top: -25%;
-    left: 0;
-    transform: translateX(-50%);
-    z-index: 0;
-  }
-
-  .about-me-text {
-    color: white;
-    font-family: Garamond, serif;
-    font-size: 5rem;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 1;
-  }
-
-  .pritam-picture-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    height: 100%;
-  }
-
-  .pritam-picture {
-    width: 50%;
-    color: white;
-  }
-
-  .introducing-text-container {
-    position: relative;
-    width: 40%;
-    height: 100%;
-    overflow-y: scroll;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    padding-right: 1rem;
-
-    &::-webkit-scrollbar {
-      width: 0.5rem;
-      display: block !important;
+    .circle {
+      border-radius: 50%;
+      z-index: 0;
     }
 
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 0.5rem;
-    }
-
-    &::-webkit-scrollbar-track {
-      display: block !important;
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
-
-  .introducing-text-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 1rem 0;
-  }
-
-  .introducing-text-title p {
-    color: white;
-    font-size: 2rem;
-    font-family: Garamond, serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0;
-
-    span {
-      font-style: italic;
-    }
-  }
-
-  .introducing-text p {
-    align-content: center;
-    text-align: justify;
-    font-size: 1.5rem;
-    color: white;
-    font-family: Garamond, serif;
-    padding-right: 3rem;
-    margin: 0;
-  }
-
-  .skills-carousel-container {
-    width: 100%;
-    padding: 1rem 0;
-  }
-
-  .skills-carousel-title {
-    padding: 0.5rem 0;
-  }
-
-  .skills-carousel-title p {
-    color: white;
-    font-size: 2rem;
-    font-family: Garamond, serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 0.5rem 0;
-    text-align: center;
-  }
-
-  .skills-carousel {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    gap: 1rem;
-    padding: 1rem 0;
-
-    &::-webkit-scrollbar {
-      height: 0.5rem;
-      display: block !important;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(255, 255, 255, 0.3);
-      border-radius: 0.5rem;
-    }
-
-    &::-webkit-scrollbar-track {
-      display: block !important;
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
-
-  .skill-item {
-    position: relative;
-    scroll-snap-align: start;
-    flex: 0 0 auto;
-    width: 6rem;
-    height: 6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    background: #222222;
-    border: 0.1rem solid white;
-    border-radius: 15%;
-
-    img {
-      width: 70%;
-      height: auto;
-      object-fit: contain;
+    .about-me-text {
       color: white;
-      transition: filter 0.3s ease;
+      font-family: Garamond, serif;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
     }
+  }
 
-    &:hover {
-      transform: scale(1.05);
+  .about-me-content-container {
+    display: flex;
+    flex-direction: column;
 
-      img {
-        filter: brightness(30%);
+    .introducing-content-container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      /* Picture */
+      .pritam-picture-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        z-index: 1;
+
+        .pritam-picture {
+          color: white;
+        }
       }
 
-      .skill-overlay {
-        opacity: 1;
+      /* Introducing Text */
+      .introducing-text-container {
+        position: relative;
+        height: 100%;
+        overflow-y: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+          width: 1vh;
+          display: block !important;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: rgb(255 255 255 / 30%);
+          border-radius: 3vh;
+        }
+
+        &::-webkit-scrollbar-track {
+          display: block !important;
+          border-radius: 3vh;
+          background: rgb(255 255 255 / 10%);
+        }
+
+        .introducing-text-title {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          padding: 2vh 0;
+        }
+
+        .introducing-text-title p {
+          color: white;
+          font-family: Garamond, serif;
+          font-weight: bold;
+          text-transform: uppercase;
+          margin: 0;
+
+          span {
+            font-style: italic;
+          }
+        }
+
+        .introducing-text p {
+          align-content: center;
+          text-align: justify;
+          color: white;
+          font-family: Garamond, serif;
+          margin: 0;
+        }
+      }
+    }
+
+    /* Skills Carousel */
+    .skills-carousel-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      /* stylelint-disable no-descending-specificity */
+      .skills-carousel-title p {
+        color: white;
+        font-family: Garamond, serif;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .skills-carousel {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        gap: 1vh;
+
+        &::-webkit-scrollbar {
+          height: 1vh;
+          display: block !important;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: rgb(255 255 255 / 30%);
+          border-radius: 3vh;
+        }
+
+        &::-webkit-scrollbar-track {
+          display: block !important;
+          border-radius: 3vh;
+          background: rgb(255 255 255 / 10%);
+        }
+
+        .skill-item {
+          display: flex;
+          position: relative;
+          justify-content: center;
+          align-items: center;
+          scroll-snap-align: start;
+          flex: 0 0 auto;
+          transition: transform 0.3s ease;
+          background: #222;
+          border: 0.1vh solid white;
+          border-radius: 15%;
+
+          img {
+            width: 70%;
+            height: auto;
+            object-fit: contain;
+            color: white;
+            transition: filter 0.3s ease;
+          }
+        }
+
+        .skill-overlay {
+          display: flex;
+          position: absolute;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          color: white;
+          text-align: center;
+          background-color: rgb(0 0 0 / 70%);
+          box-sizing: border-box;
+
+          h3 {
+            font-family: Garamond, serif;
+            text-transform: uppercase;
+          }
+
+          p {
+            font-family: Rubik, sans-serif;
+          }
+        }
       }
     }
   }
 
-  .skill-overlay {
-    display: flex;
-    position: absolute;
+  /* Mobile Layout */
+  @include respond-to('mobile', 'portrait') {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
+    height: 87vh;
     width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    color: white;
-    text-align: center;
-    box-sizing: border-box;
 
-    h3 {
-      font-family: 'Garamond', serif;
-      font-size: 1rem;
-      text-transform: uppercase;
+    .about-me-title-container {
+      width: 100%;
+      height: 30%;
+
+      .circle {
+        position: absolute;
+        width: 150%;
+        height: 170%;
+        top: -100%;
+        left: -25%;
+        background: linear-gradient(0deg, rgb(70 130 180 / 50%), transparent);
+      }
+
+      .about-me-text {
+        font-size: 6vh;
+        transform: translateY(20%);
+      }
     }
 
-    p {
-      font-family: 'Rubik', sans-serif;
-      font-size: 0.75rem;
+    .about-me-content-container {
+      width: 100%;
+      height: 70%;
+
+      .introducing-content-container {
+        height: 70%;
+
+        /* Picture */
+        .pritam-picture-container {
+          width: 35%;
+
+          .pritam-picture {
+            width: 80%;
+          }
+        }
+
+        /* Introducing Text */
+        .introducing-text-container {
+          width: 65%;
+          padding-right: 1vh;
+
+          .introducing-text-title p {
+            font-size: 3.25vh;
+          }
+
+          .introducing-text p {
+            font-size: 2.5vh;
+            padding-right: 2vh;
+          }
+        }
+      }
+
+      /* Skills Carousel */
+      .skills-carousel-container {
+        padding: 1.75vh 0;
+
+        .skills-carousel-title {
+          padding: 1vh 0;
+        }
+
+        .skills-carousel-title p {
+          font-size: 3.25vh;
+          margin: 1vh 0;
+        }
+
+        .skills-carousel {
+          padding: 1vh 0;
+
+          .skill-item {
+            width: 10vh;
+            height: 10vh;
+            cursor: pointer;
+
+            &.active {
+              transform: scale(1.05);
+
+              img {
+                filter: brightness(30%);
+              }
+
+              .skill-overlay {
+                opacity: 1;
+              }
+            }
+          }
+
+          .skill-overlay {
+            h3 {
+              font-size: 1.5vh;
+            }
+
+            p {
+              font-size: 1.25vh;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to('mobile', 'landscape') {
+    flex-direction: row;
+    height: 88vh;
+    width: 100%;
+
+    .about-me-title-container {
+      width: 30%;
+      height: 100%;
+
+      .circle {
+        position: absolute;
+        width: 170%;
+        height: 150%;
+        top: -25%;
+        left: 0;
+        border-radius: 50%;
+        background: linear-gradient(-90deg, rgb(70 130 180 / 50%), transparent);
+        transform: translateX(-50%);
+        z-index: 0;
+      }
+
+      .about-me-text {
+        font-size: 8.5vh;
+      }
+    }
+
+    .about-me-content-container {
+      width: 70%;
+      height: 100%;
+      padding-right: 2vh;
+
+      .introducing-content-container {
+        height: 70%;
+
+        /* Picture */
+        .pritam-picture-container {
+          width: 40%;
+
+          .pritam-picture {
+            width: 38%;
+          }
+        }
+
+        /* Introducing Text */
+        .introducing-text-container {
+          width: 60%;
+          padding-right: 2vh;
+
+          .introducing-text-title p {
+            font-size: 4.5vh;
+          }
+
+          .introducing-text p {
+            font-size: 3.5vh;
+            padding-right: 2vh;
+          }
+        }
+      }
+
+      /* Skills Carousel */
+      .skills-carousel-container {
+        height: 30%;
+        padding: 1.75vh 0;
+
+        .skills-carousel-title {
+          width: 100%;
+          height: fit-content;
+          padding-top: 2vh;
+          padding-bottom: 1vh;
+        }
+
+        .skills-carousel-title p {
+          font-size: 4.5vh;
+          margin: 1vh 0;
+        }
+
+        .skills-carousel {
+          width: 100%;
+          height: fit-content;
+          overflow-y: hidden;
+          margin-right: 2vh;
+          padding: 2vh 0;
+
+          .skill-item {
+            width: 11vh;
+            height: 11vh;
+            cursor: pointer;
+
+            &.active {
+              transform: scale(1.05);
+
+              img {
+                filter: brightness(30%);
+              }
+
+              .skill-overlay {
+                opacity: 1;
+              }
+            }
+          }
+
+          .skill-overlay {
+            h3 {
+              font-size: 1.25vh;
+            }
+
+            p {
+              font-size: 1.25vh;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Tablet Layout */
+  @include respond-to('tablet', 'portrait') {
+    flex-direction: column;
+    height: 88vh;
+    width: 100%;
+
+    .about-me-title-container {
+      width: 100%;
+      height: 30%;
+
+      .circle {
+        position: absolute;
+        width: 150%;
+        height: 170%;
+        top: -100%;
+        left: -25%;
+        background: linear-gradient(0deg, rgb(70 130 180 / 50%), transparent);
+      }
+
+      .about-me-text {
+        font-size: 7vh;
+        transform: translateY(20%);
+      }
+    }
+
+    .about-me-content-container {
+      width: 100%;
+      height: 70%;
+
+      .introducing-content-container {
+        height: 70%;
+
+        /* Picture */
+        .pritam-picture-container {
+          width: 35%;
+
+          .pritam-picture {
+            width: 70%;
+          }
+        }
+
+        /* Introducing Text */
+        .introducing-text-container {
+          width: 65%;
+          padding-right: 1vh;
+
+          .introducing-text-title p {
+            font-size: 3vh;
+          }
+
+          .introducing-text p {
+            font-size: 2.25vh;
+            padding-right: 2vh;
+          }
+        }
+      }
+
+      /* Skills Carousel */
+      .skills-carousel-container {
+        padding: 1.75vh 0;
+
+        .skills-carousel-title {
+          padding: 1vh 0;
+        }
+
+        .skills-carousel-title p {
+          font-size: 3vh;
+          margin-top: 2vh;
+          margin-bottom: 1vh;
+        }
+
+        .skills-carousel {
+          padding: 1vh 0;
+
+          .skill-item {
+            width: 10vh;
+            height: 10vh;
+            cursor: pointer;
+
+            &.active {
+              transform: scale(1.05);
+
+              img {
+                filter: brightness(30%);
+              }
+
+              .skill-overlay {
+                opacity: 1;
+              }
+            }
+          }
+
+          .skill-overlay {
+            h3 {
+              font-size: 1.5vh;
+            }
+
+            p {
+              font-size: 1.25vh;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to('tablet', 'landscape') {
+    flex-direction: row;
+    width: 100%;
+    height: 88vh;
+
+    .about-me-title-container {
+      width: 30%;
+      height: 100%;
+
+      .circle {
+        position: absolute;
+        width: 170%;
+        height: 150%;
+        top: -25%;
+        left: 0;
+        background: linear-gradient(-90deg, rgb(70 130 180 / 50%), transparent);
+        transform: translateX(-50%);
+      }
+
+      .about-me-text {
+        font-size: 7.5vh;
+        right: 2vh;
+      }
+    }
+
+    .about-me-content-container {
+      width: 70%;
+      height: 100%;
+      padding-right: 2vh;
+
+      .introducing-content-container {
+        height: 70%;
+
+        /* Picture */
+        .pritam-picture-container {
+          width: 40%;
+
+          .pritam-picture {
+            width: 50%;
+          }
+        }
+
+        /* Introducing Text */
+        .introducing-text-container {
+          width: 60%;
+          padding-right: 2vh;
+
+          .introducing-text-title p {
+            font-size: 3.5vh;
+          }
+
+          .introducing-text p {
+            font-size: 2.75vh;
+            padding-right: 2vh;
+          }
+        }
+      }
+
+      /* Skills Carousel */
+      .skills-carousel-container {
+        height: 30%;
+        padding: 1.75vh 0;
+
+        .skills-carousel-title {
+          width: 100%;
+          height: fit-content;
+          padding-top: 2vh;
+          padding-bottom: 1vh;
+        }
+
+        .skills-carousel-title p {
+          font-size: 3.5vh;
+          margin: 1vh 0;
+        }
+
+        .skills-carousel {
+          width: 100%;
+          height: fit-content;
+          overflow-y: hidden;
+          margin-right: 2vh;
+          padding: 2vh 0;
+
+          .skill-item {
+            width: 10vh;
+            height: 10vh;
+            cursor: pointer;
+
+            &.active {
+              transform: scale(1.05);
+
+              img {
+                filter: brightness(30%);
+              }
+
+              .skill-overlay {
+                opacity: 1;
+              }
+            }
+          }
+
+          .skill-overlay {
+            h3 {
+              font-size: 1.25vh;
+            }
+
+            p {
+              font-size: 1.25vh;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Laptop layout */
+  @include respond-to('laptop', 'landscape') {
+    flex-direction: row;
+    width: 100%;
+    height: 88vh;
+
+    .about-me-title-container {
+      width: 30%;
+      height: 100%;
+
+      .circle {
+        position: absolute;
+        width: 170%;
+        height: 150%;
+        top: -25%;
+        left: 0;
+        background: linear-gradient(-90deg, rgb(70 130 180 / 50%), transparent);
+        transform: translateX(-50%);
+      }
+
+      .about-me-text {
+        font-size: 8.5vh;
+      }
+    }
+
+    .about-me-content-container {
+      width: 70%;
+      height: 100%;
+
+      .introducing-content-container {
+        height: 70%;
+
+        /* Picture */
+        .pritam-picture-container {
+          width: 40%;
+
+          .pritam-picture {
+            width: 40%;
+          }
+        }
+
+        /* Introducing Text */
+        .introducing-text-container {
+          width: 60%;
+          padding-right: 2vh;
+
+          .introducing-text-title p {
+            font-size: 3vh;
+          }
+
+          .introducing-text p {
+            font-size: 2.3vh;
+            padding-right: 2vh;
+          }
+        }
+      }
+
+      /* Skills Carousel */
+      .skills-carousel-container {
+        height: 30%;
+        padding: 1.75vh 0;
+
+        .skills-carousel-title {
+          width: 100%;
+          height: fit-content;
+          padding: 1vh 0;
+        }
+
+        .skills-carousel-title p {
+          font-size: 3vh;
+          margin: 1vh 0;
+        }
+
+        .skills-carousel {
+          width: 100%;
+          height: fit-content;
+          overflow-y: hidden;
+          margin-right: 2vh;
+          padding: 2vh 0;
+
+          .skill-item {
+            width: 9vh;
+            height: 9vh;
+
+            &:hover {
+              transform: scale(1.05);
+
+              img {
+                filter: brightness(30%);
+              }
+
+              .skill-overlay {
+                opacity: 1;
+              }
+            }
+          }
+
+          .skill-overlay {
+            h3 {
+              font-size: 1.25vh;
+            }
+
+            p {
+              font-size: 1.25vh;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Desktop Layout */
+  @include respond-to('desktop', 'landscape') {
+    flex-direction: row;
+    width: 100%;
+    height: 88vh;
+
+    .about-me-title-container {
+      width: 30%;
+      height: 100%;
+
+      .circle {
+        position: absolute;
+        width: 170%;
+        height: 150%;
+        top: -25%;
+        left: 0;
+        background: linear-gradient(-90deg, rgb(70 130 180 / 50%), transparent);
+        transform: translateX(-50%);
+      }
+
+      .about-me-text {
+        font-size: 8vh;
+        left: 3vh;
+      }
+    }
+
+    .about-me-content-container {
+      width: 70%;
+      height: 100%;
+
+      .introducing-content-container {
+        height: 65%;
+
+        /* Picture */
+        .pritam-picture-container {
+          width: 30%;
+
+          .pritam-picture {
+            width: 45%;
+          }
+        }
+
+        /* Introducing Text */
+        .introducing-text-container {
+          width: 70%;
+          padding-right: 3vh;
+
+          .introducing-text-title p {
+            font-size: 3vh;
+          }
+
+          .introducing-text p {
+            font-size: 2.3vh;
+            padding-right: 3vh;
+          }
+        }
+      }
+
+      /* Skills Carousel */
+      .skills-carousel-container {
+        height: 35%;
+        padding: 1.5vh 0;
+
+        .skills-carousel-title {
+          padding: 2vh 0;
+        }
+
+        .skills-carousel-title p {
+          font-size: 3vh;
+          margin: 1vh 0;
+        }
+
+        .skills-carousel {
+          padding: 2vh 0;
+        }
+
+        .skill-item {
+          width: 11vh;
+          height: 11vh;
+          overflow: hidden;
+
+          &:hover {
+            transform: scale(1.05);
+
+            img {
+              filter: brightness(30%);
+            }
+
+            .skill-overlay {
+              opacity: 1;
+            }
+          }
+        }
+
+        .skill-overlay {
+          h3 {
+            font-size: 1.75vh;
+          }
+
+          p {
+            font-size: 1.5vh;
+          }
+        }
+      }
     }
   }
 }
