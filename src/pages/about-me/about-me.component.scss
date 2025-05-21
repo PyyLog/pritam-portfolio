@@ -20,10 +20,10 @@ $breakpoints: (
 );
 
 @mixin respond-to($device, $orientation: null) {
-  @if map-has-key($breakpoints, $device) {
-    $device-data: map-get($breakpoints, $device);
-    $min: map-get($device-data, min);
-    $max: map-get($device-data, max);
+  @if map.has-key($breakpoints, $device) {
+    $device-data: map.get($breakpoints, $device);
+    $min: map.get($device-data, min);
+    $max: map.get($device-data, max);
 
     @if $orientation {
       /* With orientation parameter - ensures specific device + orientation combination */
