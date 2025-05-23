@@ -83,12 +83,10 @@ $breakpoints: (
 
 .footer {
   display: flex;
-  position: absolute;
   justify-content: center;
   align-items: center;
   width: 100%;
   background: black;
-  bottom: 0;
   z-index: 10;
 
   .copyright-text {

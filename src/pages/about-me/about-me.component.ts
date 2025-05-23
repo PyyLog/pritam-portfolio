@@ -42,7 +42,7 @@ export class AboutMeComponent implements AfterViewInit {
 
       gsap.from(this.titleText.nativeElement, {
         opacity: 0,
-        y: -65,
+        y: -35,
         duration: 0.75,
         delay: 0.5,
         ease: 'power2.inOut.out',
