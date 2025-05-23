@@ -4,31 +4,80 @@
 
 /* Breakpoints definition following the logic of min-width */
 $breakpoints: (
-  mobile: 320px,
-  tablet: 768px,
-  laptop: 1280px,
-  desktop: 1920px,
+  mobile: (
+    min: 320px,
+    max: 767px,
+  ),
+  tablet: (
+    min: 768px,
+    max: 1279px,
+  ),
+  laptop: (
+    min: 1280px,
+    max: 1919px,
+  ),
+  desktop: (
+    min: 1920px,
+    max: null,
+  ),
 );
 
 @mixin respond-to($device, $orientation: null) {
   @if map.has-key($breakpoints, $device) {
+    $device-data: map.get($breakpoints, $device);
+    $min: map.get($device-data, min);
+    $max: map.get($device-data, max);
+
     @if $orientation {
-      @media (min-width: map.get($breakpoints, $device)) and (orientation: $orientation) {
-        @content;
+      /* With orientation parameter - ensures specific device + orientation combination */
+      @if $orientation == landscape {
+        @if $max {
+          @media only screen and (min-width: $min + 200px) and (max-width: $max + 200px) and (orientation: $orientation) {
+            @content;
+          }
+        }
+
+ @else {
+          @media only screen and (min-width: $min + 200px) and (orientation: $orientation) {
+            @content;
+          }
+        }
+      }
+
+ @else {
+        /* Portrait or other orientations remain unchanged */
+        @if $max {
+          @media only screen and (min-width: $min) and (max-width: $max) and (orientation: $orientation) {
+            @content;
+          }
+        }
+
+ @else {
+          @media only screen and (min-width: $min) and (orientation: $orientation) {
+            @content;
+          }
+        }
       }
     }
 
  @else {
-      @media (min-width: map.get($breakpoints, $device)) {
-        @content;
+      /* Without orientation parameter - applies to the device regardless of orientation */
+      @if $max {
+        @media only screen and (min-width: $min) and (max-width: $max) {
+          @content;
+        }
+      }
+
+ @else {
+        @media only screen and (min-width: $min) {
+          @content;
+        }
       }
     }
   }
-}
 
-@mixin orientation($direction) {
-  @media (orientation: $direction) {
-    @content;
+ @else {
+    @error "Unknown device '#{$device}'.";
   }
 }
 
@@ -56,6 +105,7 @@ $breakpoints: (
       font-family: Pattaya, sans-serif;
       text-decoration: none;
       cursor: pointer;
+      z-index: 9999;
     }
 
     .name-subtitle {
@@ -160,7 +210,7 @@ $breakpoints: (
         }
       }
 
-      @media (min-width: map.get($breakpoints, desktop)) {
+      @media (min-width: map.get(map.get($breakpoints, desktop), min)) {
         &:hover .menu-list {
           display: block;
         }
@@ -174,7 +224,7 @@ $breakpoints: (
   }
 
   /* Mobile Layout */
-  @include respond-to(mobile, 'portrait') {
+  @include respond-to('mobile', 'portrait') {
     height: 8vh;
 
     .name-text {
@@ -202,7 +252,7 @@ $breakpoints: (
       .menu {
         .menu-button {
           padding: 1vh;
-          font-size: 1.25vh;
+          font-size: 1.75vh;
           border-radius: 1vh;
         }
       }
@@ -214,7 +264,7 @@ $breakpoints: (
           padding: 1vh;
 
           a {
-            font-size: 1.25vh;
+            font-size: 1.75vh;
             padding: 0.25vh;
           }
         }
@@ -222,11 +272,11 @@ $breakpoints: (
     }
   }
 
-  @include respond-to(mobile, 'landscape') {
-    height: 10vh;
+  @include respond-to('mobile', 'landscape') {
+    height: 12vh;
 
     .name-text {
-      font-size: 4vh;
+      font-size: 5vh;
     }
 
     .sn-container {
@@ -239,7 +289,7 @@ $breakpoints: (
       }
 
       .social-icon {
-        width: 5vh;
+        width: 6vh;
       }
     }
 
@@ -250,7 +300,7 @@ $breakpoints: (
       .menu {
         .menu-button {
           padding: 1.5vh;
-          font-size: 2.5vh;
+          font-size: 3.1vh;
           border-radius: 1.5vh;
         }
       }
@@ -262,7 +312,7 @@ $breakpoints: (
           padding: 1vh;
 
           a {
-            font-size: 2.5vh;
+            font-size: 3.25vh;
             padding: 0.5vh;
           }
         }
@@ -271,7 +321,7 @@ $breakpoints: (
   }
 
   /* Tablet Layout */
-  @include respond-to(tablet, 'portrait') {
+  @include respond-to('tablet', 'portrait') {
     height: 8vh;
 
     .name-text {
@@ -293,6 +343,10 @@ $breakpoints: (
     }
 
     .menu-container {
+      width: 100%;
+      justify-content: flex-end;
+      right: 7%;
+
       .menu {
         .menu-button {
           padding: 1vh;
@@ -316,7 +370,7 @@ $breakpoints: (
     }
   }
 
-  @include respond-to(tablet, 'landscape') {
+  @include respond-to('tablet', 'landscape') {
     height: 8vh;
 
     .name-text {
@@ -338,6 +392,10 @@ $breakpoints: (
     }
 
     .menu-container {
+      width: 100%;
+      justify-content: flex-end;
+      right: 7%;
+
       .menu {
         .menu-button {
           padding: 1.1vh;
@@ -362,7 +420,7 @@ $breakpoints: (
   }
 
   /* Laptop Layout */
-  @include respond-to(laptop, 'landscape') {
+  @include respond-to('laptop', 'landscape') {
     height: 8vh;
 
     .name-text {
@@ -443,7 +501,7 @@ $breakpoints: (
   }
 
   /* Desktop Layout */
-  @include respond-to(desktop, 'landscape') {
+  @include respond-to('desktop', 'landscape') {
     height: 8vh;
 
     .name-text {
