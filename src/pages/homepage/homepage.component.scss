@@ -84,8 +84,8 @@ $breakpoints: (
   display: flex;
   position: relative;
   width: 100%;
-  height: 88vh;
   z-index: 2;
+  overflow: hidden;
 
   .homepage-content-container {
     display: flex;
@@ -409,6 +409,7 @@ $breakpoints: (
 
   /* Mobile Layout */
   @include respond-to(mobile, 'portrait') {
+    height: 79vh;
     flex-direction: column-reverse;
 
     .homepage-content-container {
@@ -643,6 +644,7 @@ $breakpoints: (
   }
 
   @include respond-to(mobile, 'landscape') {
+    height: 85vh;
     flex-direction: row;
     overflow: hidden;
 
@@ -842,13 +844,13 @@ $breakpoints: (
       }
 
       .contact-text-container {
-        top: 7vh;
+        top: 10vh;
         left: 0;
         width: 50vh;
       }
 
       .contact-text {
-        font-size: 2.75vh;
+        font-size: 2.5vh;
       }
     }
   }
@@ -856,6 +858,7 @@ $breakpoints: (
   /* Tablet Layout */
   @include respond-to(tablet, 'portrait') {
     flex-direction: column-reverse;
+    height: 85vh;
 
     .homepage-content-container {
       width: 100%;
@@ -918,7 +921,9 @@ $breakpoints: (
           height: 100%;
           overflow-y: scroll;
           scroll-snap-type: y proximity;
-          transform: translateX(2vh);
+          padding-right: 1vh;
+          padding-left: 1vh;
+          gap: 1vh;
 
           &::-webkit-scrollbar {
             width: 1vh;
@@ -1084,6 +1089,7 @@ $breakpoints: (
 
   @include respond-to(tablet, 'landscape') {
     flex-direction: row;
+    height: 88vh;
     overflow: hidden;
 
     .homepage-content-container {
@@ -1290,6 +1296,7 @@ $breakpoints: (
   /* Laptop Layout */
   @include respond-to(laptop, 'landscape') {
     flex-direction: row;
+    height: 88vh;
 
     .homepage-content-container {
       width: 60%;
@@ -1545,6 +1552,7 @@ $breakpoints: (
   /* Desktop Layout */
   @include respond-to(desktop, 'landscape') {
     flex-direction: row;
+    height: 88vh;
 
     .homepage-content-container {
       width: 60%;

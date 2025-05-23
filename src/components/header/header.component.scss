@@ -105,6 +105,7 @@ $breakpoints: (
       font-family: Pattaya, sans-serif;
       text-decoration: none;
       cursor: pointer;
+      z-index: 9999;
     }
 
     .name-subtitle {
@@ -342,6 +343,10 @@ $breakpoints: (
     }
 
     .menu-container {
+      width: 100%;
+      justify-content: flex-end;
+      right: 7%;
+
       .menu {
         .menu-button {
           padding: 1vh;
@@ -387,6 +392,10 @@ $breakpoints: (
     }
 
     .menu-container {
+      width: 100%;
+      justify-content: flex-end;
+      right: 7%;
+
       .menu {
         .menu-button {
           padding: 1.1vh;

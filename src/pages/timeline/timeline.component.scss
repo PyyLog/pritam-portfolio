@@ -391,7 +391,7 @@ $breakpoints: (
   /* Mobile Layout */
   @include respond-to('mobile', 'portrait') {
     flex-direction: column;
-    height: 87vh;
+    height: 88vh;
 
     .timeline-title-container {
       width: 100%;
@@ -407,7 +407,7 @@ $breakpoints: (
 
       .timeline-text {
         transform: translateY(20%);
-        font-size: 7vh;
+        font-size: 6vh;
       }
     }
 
@@ -520,7 +520,7 @@ $breakpoints: (
 
   @include respond-to('mobile', 'landscape') {
     flex-direction: row;
-    height: 88vh;
+    height: 85vh;
     margin-bottom: 0;
     padding-bottom: 0;
 
@@ -560,6 +560,10 @@ $breakpoints: (
 
           .education-menu-list,
           .experiences-menu-list {
+            &.show {
+              display: block;
+            }
+
             li {
               a {
                 font-size: 2.75vh;
@@ -692,6 +696,10 @@ $breakpoints: (
 
           .education-menu-list,
           .experiences-menu-list {
+            &.show {
+              display: block;
+            }
+
             li {
               a {
                 font-size: 1.5vh;
@@ -819,6 +827,10 @@ $breakpoints: (
 
           .education-menu-list,
           .experiences-menu-list {
+            &.show {
+              display: block;
+            }
+
             li {
               a {
                 font-size: 2.25vh;
