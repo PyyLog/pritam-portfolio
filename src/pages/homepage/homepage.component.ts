@@ -33,6 +33,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.checkDeviceType();
     this.setPointerEventsStyle();
+    this.projects = [...this.projects].sort((a, b) => b.id - a.id);
   }
 
   ngAfterViewInit(): void {
