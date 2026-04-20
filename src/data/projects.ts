@@ -224,4 +224,78 @@ export const PROJECTS_DESCRIPTION = [
     linkToCodeSpanNames: ['Code'],
     pathToCodes: [links.portfolioProject],
   },
+  {
+    id: 7,
+    title: 'GL2R',
+    shortDescription: 'A Discord embedded multiplayer RPG game about battling against monsters to keep brightness in the in-game world.',
+    context: `As part of a personal project, I'm developing a multiplayer game, allowing me to
+       deepen my skills in programming, game architecture in a more complex project than my previous ones.`,
+    tasksDetails: [
+      {
+        title: 'Game Logic and Mechanics',
+        points: [
+          'Used the Client-Server architecture to create the game',
+          'Implemented a character selection menu where players can choose betwwen several characters',
+          'Players can move in the game world using the arrows keys and can interact with NPCs present in the game (dialogue system)',
+          'Enabled collision detection between players and the environment',
+        ],
+      },
+      {
+        title: 'Visuals',
+        points: [
+          'Made an interface in two part: first for the character selection menu and second for the game world',
+          'Manually created the design of the map using Tiled Map Editor (design, collision layers, spawn points, etc.) and imported it in the project',
+        ],
+      },
+      {
+        title: 'Database management',
+        points: ['Created a database in Supabase using PostgreSQL to store player, enemies and game data (characters, enemies, etc.)'],
+      },
+      {
+        title: 'TO DO',
+        points: [
+          'Create a battle system with enemies',
+          'Manage character creation at the beginning (if a player is already registered in the database, he will pass the creation step)',
+          'Add more characters and classes',
+          'Add more items and equipment',
+          'Add more enemies and bosses',
+          'Create a game economy system with ressources and xp level',
+          'MORE TO COME...',
+        ],
+      },
+    ],
+    technologies: ['TypeScript', 'Node.js', 'React', 'Discord SDK', 'PostgreSQL', 'HTML', 'SCSS'],
+    thumbnail: 'pictures/gl2r-thumbnail.png',
+    illustration: 'pictures/gl2r-illustration.png',
+    state: 'In Progress',
+    linkToCodeSpanNames: [],
+    pathToCodes: [],
+  },
+  {
+    id: 8,
+    title: 'Wadeify',
+    shortDescription: 'A discord bot that moderates a server and provides various utilities.',
+    context: `I’ve been following a new streamer (WadeTHW) for a while and became a moderator on their Discord server, where I help manage the community.
+     To make things more efficient, I decided to create a custom Discord bot using Python and the discord.py library, allowing me to automate 
+     repetitive tasks like moderation, role management, and common commands.`,
+    tasksDetails: [
+      {
+        title: 'Main Features',
+        points: [
+          'The bot alerts when the streamer goes live on Twitch',
+          'The bot sends a message after a command has been used, to give main information about the discord server',
+        ],
+      },
+      {
+        title: 'TO DO',
+        points: ["Manage messages that doesn't follow the rules of the server", 'MORE TO COME...'],
+      },
+    ],
+    technologies: ['Python', 'discord.py'],
+    thumbnail: 'pictures/wadeify-thumbnail.png',
+    illustration: 'pictures/wadeify-illustration.png',
+    state: 'In Progress',
+    linkToCodeSpanNames: [],
+    pathToCodes: [],
+  },
 ];
